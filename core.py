@@ -31,5 +31,7 @@ if not os.path.exists(data_folder_path):
     add_to_log('[INFO] Created data folder.')
 
 if not os.path.exists(recipe_data_path):
-    os.makedirs(recipe_data_path)
+    with open(recipe_data_path, 'w', encoding='utf-8') as f:
+        f.write('{}')
+
     add_to_log('[INFO] Created recipe data file.')
