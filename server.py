@@ -1,11 +1,14 @@
 """
 The Server file. Hosts the server.
 """
-from flask import Flask, render_template
+# Third Party Imports
+from flask import render_template
 
-app = Flask(__name__)
+# Custom Imports
+import core
+from planner_logger import add_to_log
 
-@app.route('/')
+@core.app.route('/')
 def index():
     """
     The index page.
@@ -13,4 +16,5 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', 5000, debug=True)
+    add_to_log('[INFO] Starting server!')
+    core.app.run('0.0.0.0', 5000, debug=True)

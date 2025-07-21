@@ -1,0 +1,35 @@
+"""
+Variables and objects shared across the site.
+"""
+# Standard Imports
+from pathlib import Path
+import os
+
+# Third Party Imports
+from flask import Flask
+
+# Custom Imports
+from planner_logger import add_to_log
+
+# Flask app
+app = Flask(__name__)
+
+# Logs folder path
+logs_folder_path = Path('logs/')
+
+# Recipe data path
+data_folder_path = Path('data/')
+recipe_data_path = data_folder_path / Path('recipes.json')
+
+# Create missing folders/files
+if not os.path.exists(logs_folder_path):
+    os.makedirs(logs_folder_path)
+    add_to_log('[INFO] Created logs folder.')
+
+if not os.path.exists(data_folder_path):
+    os.makedirs(data_folder_path)
+    add_to_log('[INFO] Created data folder.')
+
+if not os.path.exists(recipe_data_path):
+    os.makedirs(recipe_data_path)
+    add_to_log('[INFO] Created recipe data file.')
