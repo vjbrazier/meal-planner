@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    
+    <div id="recipe_catalog">
+        {% for recipe in recipes %}
+            <a class="recipe_link" href="{{ url_for('recipe_page', recipe=recipe) }}">
+                <div class="recipe_card" id="{{ recipe }}">
+                    <h1>{{ recipe.capitalize() }}</h1>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 </body>
 </html>

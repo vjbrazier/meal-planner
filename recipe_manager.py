@@ -24,7 +24,7 @@ class RecipeManager:
         """
 
         for index, item in enumerate(arr):
-            item = item.strip().capitalize()
+            item = item.strip().lower()
             arr[index] = item
 
     def load_json_recipes(self):
@@ -41,7 +41,7 @@ class RecipeManager:
 
             recipes[recipe] = Recipe(
                 name=recipe,
-                ingredients=data.get('ingredients'),
+                ingredients= data.get('ingredients'),
                 measurements=data.get('measurements'),
                 instructions=data.get('instructions'),
                 meal_type=data.get('meal_type'),
@@ -118,3 +118,15 @@ class RecipeManager:
                 fat=fat
             )
         self.save_recipes()
+
+    def get_recipe_list(self):
+        """
+        Returns a list of all the recipe names.
+        """
+        return self.recipes.keys()
+
+    def get_recipe(self, recipe):
+        """
+        Returns a recipe as a dict.
+        """
+        return self.recipes.get(recipe).to_dict()
