@@ -91,6 +91,7 @@ class RecipeManager:
                 else:
                     add_to_log(f'[ERROR] An error occurred when trying to read line {line_count} of {tsv_file}.')
 
+        self.save_recipes()
 
     def save_recipes(self):
         """

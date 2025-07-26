@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ recipe.get('name') }}</title>
+    <title>{{ recipe.get('name').capitalize() }}</title>
+
+    <!-- Recipe Page Styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe_page.css') }}">
+
+    <!-- Theme -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+    <script src="{{ url_for('static', filename='js/themes.js') }}"></script>
 </head>
-<body>
-    <h1>This is the recipe page for {{ recipe.get('name') }}</h1>
+<body id="webpage">
+    <h1>This is the recipe page for {{ recipe.get('name').capitalize() }}</h1>
 </body>
 </html>

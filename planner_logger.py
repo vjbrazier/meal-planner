@@ -47,4 +47,4 @@ def write_log():
             f.write(line + '\n')
 
 # Only writes all the logs once the program ends to prevent constant disk I/O
-atexit.register(write_log)
+# atexit.register(write_log)
