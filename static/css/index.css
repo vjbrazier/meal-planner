@@ -52,6 +52,10 @@ body {
     text-decoration: none;
     color: var(--button-text-color);
 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
     transition: var(--transition);
 }
 
@@ -63,6 +67,13 @@ body {
 
 .recipe-name {
     place-self: center;
+
+    padding: 5px 5px 5px 5px;
+    color: var(--button-text-color);
+    border: 3px solid var(--button-border-color);
+    background-color: var(--button-background-color);
+
+    transition: var(--transition);
 }
 
 /* Week planner */

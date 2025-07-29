@@ -18,6 +18,16 @@
 <body id="webpage">
     {% include 'themes.html' %}
 
+    <div id="recipe-div">
+        <div id="recipe-info">
+            <img src="{{ url_for('static', filename=recipe_image) }}">
+        </div>
+
+        <div id="recipe-instructions">
+
+        </div>
+    </div>
+
     <h1>This is the recipe page for {{ recipe.get('name').capitalize() }}</h1>
 </body>
 </html>

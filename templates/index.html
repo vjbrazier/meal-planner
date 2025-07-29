@@ -6,7 +6,7 @@
     <title>Meal Planner</title>
 
     <!-- Style Reset -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
 
     <!-- Index Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
@@ -20,12 +20,10 @@
 
     {% include 'themes.html' %}
 
-
-
     <div id="recipe-catalog">
-        {% for recipe in recipes.values() %}
-        <a class="recipe-link" href="{{ url_for('recipe_page', recipe=recipe.get('name')) }}">
-            <h2 class="recipe-name" data-ingredients="{{ recipe.get('ingredients') }}">{{ recipe.get('name').capitalize() }}</h2>
+        {% for recipe_name, recipe_image in recipe_card_data %}
+        <a data-image="{{ url_for('static', filename=recipe_image) }}" class="recipe-link" href="{{ url_for('recipe_page', recipe=recipe_name) }}">
+            <h2 class="recipe-name">{{ recipe_name.capitalize() }}</h2>
         </a>
         {% endfor %}
     </div>
@@ -44,5 +42,7 @@
         <button class="weekday" id="friday">Friday</button>
         <button class="weekday" id="saturday">Saturday</button>
     </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

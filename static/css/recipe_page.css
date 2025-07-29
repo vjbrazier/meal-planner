@@ -10,3 +10,12 @@ body {
 
     transition: var(--transition);
 }
+
+#recipe-div {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+}
+
+#recipe-info, #recipe-instructions {
+    place-self: center;
+}

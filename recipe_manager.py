@@ -120,6 +120,12 @@ class RecipeManager:
             )
         self.save_recipes()
 
+    def get_recipe_names(self):
+        """
+        Returns all of the recipes names as a list.
+        """
+        return self.recipes.keys()
+
     def get_recipes(self):
         """
         Returns all of the recipes in a dict format.
