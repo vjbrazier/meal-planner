@@ -1,0 +1,12 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    --transition: .25s ease-in-out;
+
+    background-color: var(--page-background-color);
+    color: var(--page-text-color);
+
+    transition: var(--transition);
+}

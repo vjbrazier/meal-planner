@@ -16,16 +16,33 @@
     <script src="{{ url_for('static', filename='js/themes.js') }}"></script>
 </head>
 <body id="webpage">
-    <h1 id="header">Meal Planner</h1>
+    <h1 class="header">Meal Planner</h1>
 
     {% include 'themes.html' %}
 
-    <div id="recipe_catalog">
-        {% for recipe in recipes %}
-        <a class="recipe_link" href="{{ url_for('recipe_page', recipe=recipe) }}">
-            <h1 class="recipe_name">{{ recipe.capitalize() }}</h1>
+
+
+    <div id="recipe-catalog">
+        {% for recipe in recipes.values() %}
+        <a class="recipe-link" href="{{ url_for('recipe_page', recipe=recipe.get('name')) }}">
+            <h2 class="recipe-name" data-ingredients="{{ recipe.get('ingredients') }}">{{ recipe.get('name').capitalize() }}</h2>
         </a>
         {% endfor %}
+    </div>
+
+    <br>
+    <h1 class="header">Upcoming week</h1>
+    <h3 id="ingredient-list">Ingredients required: </h3>
+    <br>
+
+    <div id="week-planner">
+        <button class="weekday" id="sunday">Sunday</button>
+        <button class="weekday" id="monday">Monday</button>
+        <button class="weekday" id="tuesday">Tuesday</button>
+        <button class="weekday" id="wednesday">Wednesday</button>
+        <button class="weekday" id="thurday">Thursday</button>
+        <button class="weekday" id="friday">Friday</button>
+        <button class="weekday" id="saturday">Saturday</button>
     </div>
 </body>
 </html>

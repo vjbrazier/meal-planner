@@ -17,7 +17,7 @@ def index():
     """
     The index page.
     """
-    return render_template('index.html', recipes=manager.get_recipe_list())
+    return render_template('index.html', recipes=manager.get_recipes())
 
 @core.app.route('/<recipe>')
 def recipe_page(recipe):

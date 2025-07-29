@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ recipe.get('name').capitalize() }}</title>
 
+    <!-- Style Reset -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+
     <!-- Recipe Page Styling -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe_page.css') }}">
 
@@ -13,6 +16,8 @@
     <script src="{{ url_for('static', filename='js/themes.js') }}"></script>
 </head>
 <body id="webpage">
+    {% include 'themes.html' %}
+
     <h1>This is the recipe page for {{ recipe.get('name').capitalize() }}</h1>
 </body>
 </html>
