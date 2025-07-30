@@ -52,11 +52,6 @@ def index():
     recipe_data = manager.get_recipes()
     recipe_card_data= zip(manager.get_recipe_names(), recipe_images)
 
-    # recipe_images = []
-
-    # for recipe in recipe_names:
-    #     recipe_images.append(get_recipe_image(recipe, 250))
-
     return render_template('index.html', recipe_data=recipe_data, recipe_card_data=recipe_card_data)
 
 @core.app.route('/<recipe>')
@@ -69,11 +64,13 @@ def recipe_page(recipe):
 
     recipe_image = get_recipe_image(recipe_name, 500)
 
-    return render_template('recipe_page.html', recipe=recipe, recipe_image=recipe_image)
+    recipe_ingredients = zip(recipe.get('measurements'), recipe.get('ingredients'))
+
+    return render_template('recipe_page.html', recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
 
 if __name__ == '__main__':
     add_to_log('[INFO] Starting server!')
 
-    # manager.load_tsv_recipes('data/data.tsv')
+    manager.load_tsv_recipes('data/data.tsv', 'data/instructions.tsv')
 
     core.app.run('0.0.0.0', 5000, debug=True)

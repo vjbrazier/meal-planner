@@ -16,23 +16,28 @@ class RecipeManager:
     def __init__(self, recipe_data_path=core.recipe_data_path):
         self.recipe_data_path = recipe_data_path
 
-        self.recipes = self.load_json_recipes()
+        self.recipes = self.load_input_recipes()
 
     def clean_array_items(self, arr):
         """
-        Trims and capitalizes all items in an array.
+        Strips whitespace, and lowercases all letters in an array's items.
         """
-
         for index, item in enumerate(arr):
             item = item.strip().lower()
             arr[index] = item
 
-    def load_json_recipes(self):
+        return arr
+
+    def load_input_recipes(self, dict_data=None):
         """
-        Loads recipes from the JSON file into live memory.
+        Loads recipes from the JSON file or from the data provided into live memory.
+        Returns a dictionary of the data loaded.
         """
-        with open(self.recipe_data_path, 'r', encoding='utf-8') as f:
-            raw_data = json.load(f)
+        if dict_data is None:
+            with open(self.recipe_data_path, 'r', encoding='utf-8') as f:
+                raw_data = json.load(f)
+        else:
+            raw_data = dict_data
 
         recipes = {}
 
@@ -56,41 +61,54 @@ class RecipeManager:
         add_to_log('[INFO] Successfully loaded all recipes!')
         return recipes
 
-    def load_tsv_recipes(self, tsv_file):
+    def load_tsv_recipes(self, data_tsv_file, instruction_tsv_file):
         """
         Loads recipes from a .tsv file into live memory
         """
-        with open(tsv_file, 'r', encoding='utf-8') as f:
-            # Skips the header
-            next(f)
-            
-            line_count = 0
-            for line in f:
-                line_count += 1
-                current_line = line.split('\t')
+        recipe_data = {}
 
-                print(current_line)
+        with open(data_tsv_file, 'r', encoding='utf-8') as f:
+            next(f) # Skips the header
 
-                if len(current_line) == 9:
-                    name = current_line[0]
-                    ingredients  = list(current_line[1].split(','))
-                    measurements = list(current_line[2].split(','))
-                    instructions = list(current_line[3].split(','))
-                    meal_type = current_line[4]
-                    calories = current_line[5]
-                    protein = current_line[6]
-                    carbs = current_line[7]
-                    fat = current_line[8]
+            for line_count, line in enumerate(f, start=2):
+                current_line = line.strip().split('\t')
 
-                    self.clean_array_items(ingredients)
-                    self.clean_array_items(measurements)
-                    self.clean_array_items(instructions)
+                try:
+                    name = current_line[0].lower()
 
-                    self.create_recipe(name, ingredients, measurements, instructions, meal_type, calories, protein, carbs, fat)
+                    recipe = {
+                        'name': name,
+                        'ingredients':  self.clean_array_items(current_line[1].split(',')),
+                        'measurements': self.clean_array_items(current_line[2].split(',')),
+                        'meal_type': current_line[3],
+                        'calories': int(current_line[4]) if len(current_line) > 4 and current_line[4].isdigit() else 'N/A',
+                        'protein':  int(current_line[5]) if len(current_line) > 5 and current_line[5].isdigit() else 'N/A',
+                        'carbs':    int(current_line[6]) if len(current_line) > 6 and current_line[6].isdigit() else 'N/A',
+                        'fat':      int(current_line[7]) if len(current_line) > 7 and current_line[7].isdigit() else 'N/A',
+                    }
 
-                else:
-                    add_to_log(f'[ERROR] An error occurred when trying to read line {line_count} of {tsv_file}.')
+                    recipe_data[name] = recipe
 
+                except Exception as e:
+                    add_to_log(f'[ERROR] An error occurred on line {line_count} of {data_tsv_file}: {e}')
+
+        with open(instruction_tsv_file, 'r', encoding='utf-8') as f:
+            next(f) # Skips the header
+
+            for line_count, line in enumerate(f, start=2):
+                current_line = line.strip().split('\t')
+
+                try:
+                    name = current_line[0].lower()
+                    current_line.pop(0)
+
+                    if recipe_data.get(name):
+                        recipe_data[name].setdefault('instructions', current_line)
+
+                except Exception as e:
+                    add_to_log(f'[ERROR] An error occurred on line {line_count} of {instruction_tsv_file}: {e}')
+
+        self.recipes.update(self.load_input_recipes(recipe_data))
         self.save_recipes()
 
     def save_recipes(self):

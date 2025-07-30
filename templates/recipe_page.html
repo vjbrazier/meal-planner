@@ -18,16 +18,41 @@
 <body id="webpage">
     {% include 'themes.html' %}
 
-    <div id="recipe-div">
-        <div id="recipe-info">
-            <img src="{{ url_for('static', filename=recipe_image) }}">
-        </div>
-
-        <div id="recipe-instructions">
-
-        </div>
+    <div id="nav-buttons">
+        <a href="{{ url_for('index') }}">
+            <button id="home">Home</button>
+        </a>
+        <button id="edit">✏️ Edit Recipe</button>
     </div>
 
-    <h1>This is the recipe page for {{ recipe.get('name').capitalize() }}</h1>
+    <br>
+
+    <div id="recipe-div">
+        <div id="recipe-info">
+            <h1>{{ recipe.get('name').capitalize() }}</h1>
+            <img id="recipe-image" src="{{ url_for('static', filename=recipe_image) }}">
+            <div id="ingredients">
+                <h2 id="ingredient-header">Ingredients</h2>
+                {% for measurement, ingredient in recipe_ingredients %}
+                    <h3 class="ingredients">{{ measurement }} - {{ ingredient.capitalize() }}</h3>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="filler">
+            <div id="recipe-nutrition">
+                <h2>Calories - {{ recipe.get('calories') }}</h2>
+                <h2>Protein  - {{ recipe.get('protein') }}</h2>
+                <h2>Carbs    - {{ recipe.get('carbs') }}</h2>
+                <h2>Fat      - {{ recipe.get('fat') }}</h2>
+            </div>
+    
+            <div id="recipe-instructions">
+                {% for instruction in recipe.get('instructions') %}
+                    <h2>Step {{ loop.index }}. {{ instruction.capitalize() }}</h2>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </body>
 </html>

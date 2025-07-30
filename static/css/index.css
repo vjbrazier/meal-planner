@@ -27,6 +27,8 @@ body {
 
     padding: 10px 10px 10px 10px;
     border: 3px solid var(--button-border-color);
+    margin-left: 100px;
+    margin-right: 100px;
     /* background-color: var(--button-hover-color); */
     height: 500px;
     overflow: scroll;
@@ -67,11 +69,14 @@ body {
 
 .recipe-name {
     place-self: center;
+    text-align: center;
 
     padding: 5px 5px 5px 5px;
     color: var(--button-text-color);
     border: 3px solid var(--button-border-color);
     background-color: var(--button-background-color);
+
+    width: 75%;
 
     transition: var(--transition);
 }
@@ -85,7 +90,7 @@ body {
     display: grid;
 
     place-self: center;
-    padding: 5px 5px 5px 5px;
+    /* padding: 5px 5px 5px 5px; */
     border: 3px solid var(--button-border-color);
     gap: 15px;
 
@@ -98,7 +103,7 @@ body {
     width: 250px;
     height: 250px;
 
-    border: 3px solid var(--button-border-color);
+    /* border: 3px solid var(--button-border-color); */
     background-color: var(--button-background-color);
     color: var(--button-text-color);
 

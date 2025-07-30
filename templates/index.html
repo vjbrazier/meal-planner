@@ -23,7 +23,7 @@
     <div id="recipe-catalog">
         {% for recipe_name, recipe_image in recipe_card_data %}
         <a data-image="{{ url_for('static', filename=recipe_image) }}" class="recipe-link" href="{{ url_for('recipe_page', recipe=recipe_name) }}">
-            <h2 class="recipe-name">{{ recipe_name.capitalize() }}</h2>
+            <h3 class="recipe-name">{{ recipe_name.title() }}</h3>
         </a>
         {% endfor %}
     </div>
