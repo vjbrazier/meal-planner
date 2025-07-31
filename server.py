@@ -50,7 +50,7 @@ def index():
     recipe_images = [get_recipe_image(recipe, 300) for recipe in recipe_names]
 
     recipe_data = manager.get_recipes()
-    recipe_card_data= zip(manager.get_recipe_names(), recipe_images)
+    recipe_card_data= zip(manager.get_recipe_names(), manager.get_recipe_measurements(), manager.get_recipe_ingredients(), manager.get_recipe_meal_types(), recipe_images)
 
     return render_template('index.html', recipe_data=recipe_data, recipe_card_data=recipe_card_data)
 

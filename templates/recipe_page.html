@@ -29,7 +29,7 @@
 
     <div id="recipe-div">
         <div id="recipe-info">
-            <h1>{{ recipe.get('name').capitalize() }}</h1>
+            <h1>{{ recipe.get('name').title() }}</h1>
             <img id="recipe-image" src="{{ url_for('static', filename=recipe_image) }}">
             <div id="ingredients">
                 <h2 id="ingredient-header">Ingredients</h2>
@@ -49,7 +49,7 @@
     
             <div id="recipe-instructions">
                 {% for instruction in recipe.get('instructions') %}
-                    <h2>Step {{ loop.index }}. {{ instruction.capitalize() }}</h2>
+                    <h2>Step {{ loop.index }}. {{ instruction }}</h2>
                 {% endfor %}
             </div>
         </div>

@@ -25,6 +25,24 @@ class Recipe:
         self.carbs = carbs
         self.fat = fat
 
+    def get_measurements(self):
+        """
+        Returns measurements as a list.
+        """
+        return self.measurements
+
+    def get_ingredients(self):
+        """
+        Returns ingredients as a list.
+        """
+        return self.ingredients
+
+    def get_meal_type(self):
+        """
+        Returns type as a string.
+        """
+        return self.meal_type
+
     def to_dict(self):
         """
         Returns the recipe as a dictionary.

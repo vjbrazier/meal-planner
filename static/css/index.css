@@ -21,6 +21,18 @@ body {
 }
 
 /* Recipes */
+#selected-recipe.visible {
+    display: block;
+    position: absolute;
+    border: 3px solid var(--button-border-color);
+    background-color: var(--button-hover-color);
+    color: var(--button-text-color);
+}
+
+#selected-recipe {
+    display: none;
+}
+
 #recipe-catalog {
     display: grid;
     grid-template-columns: repeat(4, auto);
@@ -83,7 +95,7 @@ body {
 
 /* Week planner */
 #ingredient-list {
-    margin-left: 150px;
+    place-self: center;
 }
 
 #week-planner {
@@ -99,13 +111,39 @@ body {
     transition: var(--transition);
 }
 
-.weekday {
-    width: 250px;
-    height: 250px;
+.weekday-div {
+    border: 3px solid var(--button-border-color);
+}
 
-    /* border: 3px solid var(--button-border-color); */
+.weekday {
+    width: 225px;
+    height: 225px;
+
+    border: none;
+    border-top: 3px solid var(--button-border-color);
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
     background-color: var(--button-background-color);
     color: var(--button-text-color);
 
     transition: var(--transition);
+}
+
+.weekday-outer-text {
+    color: var(--button-text-color);
+    background-color: var(--button-background-color);
+    width: 100%;
+
+    text-align: center;
+
+    transition: var(--transition);
+}
+
+.weekday-inner-text {
+    border: 3px solid var(--button-border-color);
+    background-color: var(--button-background-color);
+    padding: 5px 5px 5px 5px;
 }

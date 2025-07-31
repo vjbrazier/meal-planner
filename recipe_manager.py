@@ -144,6 +144,27 @@ class RecipeManager:
         """
         return self.recipes.keys()
 
+    def get_recipe_measurements(self):
+        """
+        Returns a 2D array containing all recipe measurements.
+        """
+        names = self.get_recipe_names()
+        return [self.recipes.get(name).get_measurements() for name in names]
+
+    def get_recipe_ingredients(self):
+        """
+        Returns a 2D array containing all recipe ingredients.
+        """
+        names = self.get_recipe_names()
+        return [self.recipes.get(name).get_ingredients() for name in names]
+
+    def get_recipe_meal_types(self):
+        """
+        Returns a 2D array containing all recipe types.
+        """
+        names = self.get_recipe_names()
+        return [self.recipes.get(name).get_meal_type() for name in names]
+
     def get_recipes(self):
         """
         Returns all of the recipes in a dict format.
