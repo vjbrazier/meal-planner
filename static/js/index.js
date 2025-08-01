@@ -1,18 +1,23 @@
-// Variables and page elements \\
-const recipe_cards = document.getElementsByClassName('recipe-link');
+// Page Elements and Variables \\
+const recipe_cards = document.getElementsByClassName('recipe-card');
 const recipe_names = document.getElementsByClassName('recipe-name');
 const selected_recipe = document.getElementById('selected-recipe');
-const weekdays = document.getElementsByClassName('weekday');
+const weekday_buttons = document.getElementsByClassName('weekday-button');
 const weekdays_inner_text = document.getElementsByClassName('weekday-inner-text');
 
 let selected = false;
 let selectedIndex = null;
 let weekday_selected = [false, false, false, false, false, false, false]
 
-// Sets images using the path put into the data-image tag
+// // Sets images using the path put into the data-image tag
 for (let i = 0; i < recipe_cards.length; i++) {
     let image = recipe_cards[i].getAttribute('data-image');
+    let recipe_href = recipe_cards[i].getAttribute('data-href');
+
     recipe_cards[i].style.backgroundImage = `url("${image}")`;
+    recipe_cards[i].addEventListener('click', () => {
+        window.location.href = recipe_href;
+    })
 }
 
 // Moving recipes into the weekdays \\
@@ -29,10 +34,6 @@ for (let i = 0; i < recipe_cards.length; i++) {
         }), 100)
 
         selected_recipe.innerText = recipe_names[i].innerText;
-        selected_recipe.setAttribute('data-measurements', recipe_cards[i].getAttribute('data-measurements'))
-        selected_recipe.setAttribute('data-ingredients', recipe_cards[i].getAttribute('data-ingredients'))
-        selected_recipe.setAttribute('data-meal-type', recipe_cards[i].getAttribute('data-meal-type'))
-        selected_recipe.setAttribute('data-image', recipe_cards[i].getAttribute('data-image'))
     })
 }
 
@@ -49,12 +50,12 @@ document.addEventListener('mousemove', (event) => {
 })
 
 // Checks for if cursor is over a weekday button.
-for (let i = 0; i < weekdays.length; i++) {
-    weekdays[i].addEventListener(('mouseover'), () => {
+for (let i = 0; i < weekday_buttons.length; i++) {
+    weekday_buttons[i].addEventListener(('mouseover'), () => {
         weekday_selected[i] = true;
     })
 
-    weekdays[i].addEventListener(('mouseout'), () => {
+    weekday_buttons[i].addEventListener(('mouseout'), () => {
         weekday_selected[i] = false;
     })
 }
@@ -62,8 +63,12 @@ for (let i = 0; i < weekdays.length; i++) {
 document.addEventListener('mouseup', () => {
     for (let i = 0; i < weekday_selected.length; i++) {
         if (weekday_selected[i] == true) {
-            weekdays[i].style.backgroundImage = `url(${selected_recipe.getAttribute('data-image')})`;
-            weekdays[i].style.backgroundColor = 'var(--button-hover-color)';
+            let recipe = selected_recipe.innerText.toLowerCase();
+            let current_recipe_info = document.getElementById(recipe);
+
+            weekday_buttons[i].style.backgroundImage = `url(${current_recipe_info.getAttribute('data-image')})`;
+            weekday_buttons[i].style.backgroundColor = 'var(--button-hover-color)';
+            weekdays_inner_text[i].classList.add('visible');
             weekdays_inner_text[i].innerText = `${selected_recipe.innerText}`;
         }
     }

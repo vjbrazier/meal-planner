@@ -20,6 +20,7 @@ logs_folder_path = Path('logs/')
 # Recipe data path
 data_folder_path = Path('data/')
 recipe_data_path = data_folder_path / Path('recipes.json')
+recipe_image_path = Path('static/images/recipes')
 
 # Create missing folders/files
 if not os.path.exists(logs_folder_path):
@@ -29,6 +30,10 @@ if not os.path.exists(logs_folder_path):
 if not os.path.exists(data_folder_path):
     os.makedirs(data_folder_path)
     add_to_log('[INFO] Created data folder.')
+
+if not os.path.exists(recipe_image_path):
+    os.makedirs(recipe_image_path)
+    add_to_log('[INFO] Created recipe image folder.')
 
 if not os.path.exists(recipe_data_path):
     with open(recipe_data_path, 'w', encoding='utf-8') as f:

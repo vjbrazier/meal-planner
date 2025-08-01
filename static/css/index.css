@@ -52,8 +52,10 @@ body {
     display: none; /* Hides the scrollbar */
 }
 
-.recipe-link {
+.recipe-card {
     display: flex;
+    position: relative;
+    flex-direction: column-reverse;
     place-self: center;
     place-content: center;
 
@@ -63,7 +65,6 @@ body {
 
     border: 3px solid var(--button-border-color);
     background-color: var(--button-background-color);
-    text-decoration: none;
     color: var(--button-text-color);
 
     background-size: contain;
@@ -73,7 +74,7 @@ body {
     transition: var(--transition);
 }
 
-.recipe-link:hover {
+.recipe-card:hover {
     background-color: var(--button-hover-color);
 
     transition: var(--transition);
@@ -89,6 +90,51 @@ body {
     background-color: var(--button-background-color);
 
     width: 75%;
+
+    transition: var(--transition);
+}
+
+.delete-recipe::before {
+    content: "Delete";
+    font-size: 0px;
+    /* width: auto; */
+    /* height: 25px; */
+
+    transition: var(--transition);
+}
+
+.delete-recipe {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+
+    font-size: 20px;
+
+    padding: 3px 3px 3px 3px;
+
+    width: auto;
+    height: 25px;
+
+    background-color: var(--button-background-color);
+    border: 3px solid var(--button-border-color);
+    border-bottom-left-radius: 10px;
+    
+    transition: var(--transition);
+}
+
+.delete-recipe:hover {
+    background-color: var(--button-hover-color);
+    font-size: 0px;
+
+    transition: var(--transition);
+}
+
+.delete-recipe:hover.recipe-card {
+    background-color: var(--button-background-color);
+}
+
+.delete-recipe:hover.delete-recipe::before {
+    font-size: 20px;
 
     transition: var(--transition);
 }
@@ -115,7 +161,7 @@ body {
     border: 3px solid var(--button-border-color);
 }
 
-.weekday {
+.weekday-button {
     width: 225px;
     height: 225px;
 
@@ -143,6 +189,11 @@ body {
 }
 
 .weekday-inner-text {
+    visibility: none;
+}
+
+.weekday-inner-text.visible {
+    visibility: visible;
     border: 3px solid var(--button-border-color);
     background-color: var(--button-background-color);
     padding: 5px 5px 5px 5px;

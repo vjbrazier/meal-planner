@@ -20,13 +20,16 @@
 
     {% include 'themes.html' %}
 
-    <h3 data-measurements="" data-ingredients="" data-meal-type="" data-image="" id="selected-recipe"></h3>
+    <h3 data-image="" id="selected-recipe"></h3>
 
     <div id="recipe-catalog">
         {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
-            <a data-measurements="{{ recipe_measurements }}" data-ingredients="{{ recipe_ingredients }}" data-meal-type="{{ recipe_meal_type }}" data-image="{{ url_for('static', filename=recipe_image) }}" class="recipe-link" href="{{ url_for('recipe_page', recipe=recipe_name) }}">
+            <div class="recipe-card" data-href="{{ url_for('recipe_page', recipe=recipe_name) }}" data-image="{{ url_for('static', filename=recipe_image) }}">
+                <!-- This is invisible. It has an ID of the recipe name, and contains that recipe's data. -->
+                <span class="data-holder" id="{{ recipe_name }}" data-measurements="{{ recipe_measurements }}" data-ingredients="{{ recipe_ingredients }}" data-meal-type="{{ recipe_meal_type }}" data-image="{{ url_for('static', filename=recipe_image) }}"></span>
                 <h3 class="recipe-name">{{ recipe_name.title() }}</h3>
-            </a>
+                <h3 class="delete-recipe">X</h3>
+            </div>
         {% endfor %}
     </div>
 
@@ -36,34 +39,12 @@
     <br>
 
     <div id="week-planner">
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Sunday</h2>
-            <button class="weekday" id="sunday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Monday</h2>
-            <button class="weekday" id="monday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Tuesday</h2>
-            <button class="weekday" id="tuesday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Wednesday</h2>
-            <button class="weekday" id="wednesday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Thursday</h2>
-            <button class="weekday" id="thursday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Friday</h2>
-            <button class="weekday" id="friday"><span class="weekday-inner-text"></span></button>
-        </div>
-        <div class="weekday-div">
-            <h2 class="weekday-outer-text">Saturday</h2>
-            <button class="weekday" id="saturday"><span class="weekday-inner-text"></span></button>
-        </div>
+        {% for day in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %}
+            <div class="weekday-div">
+                <h2 class="weekday-outer-text">{{ day.capitalize() }}</h2>
+                <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
+            </div>
+        {% endfor %}
     </div>
 
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
