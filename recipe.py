@@ -6,7 +6,7 @@ class Recipe:
     Recipe class. Has the following attributes:
     """
     def __init__(self, name='', ingredients=None, measurements=None, instructions=None,
-                 meal_type='', calories=0, protein=0, carbs=0, fat=0):
+                 meal_type='', servings=0, calories=0, protein=0, carbs=0, fat=0):
         # Sets defaults in a safe way
         if ingredients is None:
             ingredients = []
@@ -20,6 +20,7 @@ class Recipe:
         self.measurements = measurements
         self.instructions = instructions
         self.meal_type = meal_type
+        self.servings = servings
         self.calories = calories
         self.protein = protein
         self.carbs = carbs
@@ -53,6 +54,7 @@ class Recipe:
             'measurements': self.measurements,
             'instructions': self.instructions,
             'meal_type': self.meal_type,
+            'sercings': self.servings,
             'calories': self.calories,
             'protein': self.protein,
             'carbs': self.carbs,

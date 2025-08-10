@@ -1,15 +1,20 @@
 // Page Elements and Variables \\
+// Recipe cards
 const recipe_cards = document.getElementsByClassName('recipe-card');
 const recipe_names = document.getElementsByClassName('recipe-name');
 const selected_recipe = document.getElementById('selected-recipe');
-const weekday_buttons = document.getElementsByClassName('weekday-button');
-const weekdays_inner_text = document.getElementsByClassName('weekday-inner-text');
 
 let selected = false;
 let selectedIndex = null;
+
+// Weekday planning
+const weekday_buttons = document.getElementsByClassName('weekday-button');
+const weekdays_inner_text = document.getElementsByClassName('weekday-inner-text');
+const weekday_clears = document.getElementsByClassName('clear-weekday');
+
 let weekday_selected = [false, false, false, false, false, false, false]
 
-// // Sets images using the path put into the data-image tag
+// Sets images using the path put into the data-image tag
 for (let i = 0; i < recipe_cards.length; i++) {
     let image = recipe_cards[i].getAttribute('data-image');
     let recipe_href = recipe_cards[i].getAttribute('data-href');
@@ -60,6 +65,7 @@ for (let i = 0; i < weekday_buttons.length; i++) {
     })
 }
 
+// Updates the weekday once you stop holding
 document.addEventListener('mouseup', () => {
     for (let i = 0; i < weekday_selected.length; i++) {
         if (weekday_selected[i] == true) {
@@ -77,3 +83,13 @@ document.addEventListener('mouseup', () => {
     selectedIndex = null;
     selected_recipe.classList.remove('visible');
 })
+
+// Clears the data inside the weekday
+for (let i = 0; i < weekday_clears.length; i++) {
+    weekday_clears[i].addEventListener('click', () => {
+        weekday_buttons[i].style.backgroundColor = 'var(--button-background-color)';
+        weekday_buttons[i].style.backgroundImage = 'none';
+        weekdays_inner_text[i].innerText = '';
+        weekdays_inner_text[i].classList.remove('visible');
+    })
+}

@@ -76,6 +76,7 @@ body {
 
 .recipe-card:hover {
     background-color: var(--button-hover-color);
+    cursor: pointer;
 
     transition: var(--transition);
 }
@@ -167,6 +168,7 @@ body {
 
     border: none;
     border-top: 3px solid var(--button-border-color);
+    border-bottom: 3px solid var(--button-border-color);
 
     background-size: contain;
     background-repeat: no-repeat;
@@ -197,4 +199,11 @@ body {
     border: 3px solid var(--button-border-color);
     background-color: var(--button-background-color);
     padding: 5px 5px 5px 5px;
+}
+
+.clear-weekday:hover {
+    background-color: var(--button-hover-color);
+    cursor: pointer;
+
+    transition: var(--transition);
 }

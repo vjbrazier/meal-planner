@@ -43,6 +43,7 @@
             <div class="weekday-div">
                 <h2 class="weekday-outer-text">{{ day.capitalize() }}</h2>
                 <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
+                <h2 class="weekday-outer-text clear-weekday" id="{{ day }}-clear">Clear recipe</h2>
             </div>
         {% endfor %}
     </div>

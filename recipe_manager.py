@@ -50,6 +50,7 @@ class RecipeManager:
                 measurements=data.get('measurements'),
                 instructions=data.get('instructions'),
                 meal_type=data.get('meal_type'),
+                servings=data.get('servings'),
                 calories=data.get('calories'),
                 protein=data.get('protein'),
                 carbs=data.get('carbs'),
@@ -81,10 +82,11 @@ class RecipeManager:
                         'ingredients':  self.clean_array_items(current_line[1].split(',')),
                         'measurements': self.clean_array_items(current_line[2].split(',')),
                         'meal_type': current_line[3],
-                        'calories': int(current_line[4]) if len(current_line) > 4 and current_line[4].isdigit() else 'N/A',
-                        'protein':  int(current_line[5]) if len(current_line) > 5 and current_line[5].isdigit() else 'N/A',
-                        'carbs':    int(current_line[6]) if len(current_line) > 6 and current_line[6].isdigit() else 'N/A',
-                        'fat':      int(current_line[7]) if len(current_line) > 7 and current_line[7].isdigit() else 'N/A',
+                        'servings': int(current_line[4]) if len(current_line) > 4 and current_line[4].isdigit() else 'N/A',
+                        'calories': int(current_line[5]) if len(current_line) > 5 and current_line[5].isdigit() else 'N/A',
+                        'protein':  int(current_line[6]) if len(current_line) > 6 and current_line[6].isdigit() else 'N/A',
+                        'carbs':    int(current_line[7]) if len(current_line) > 7 and current_line[7].isdigit() else 'N/A',
+                        'fat':      int(current_line[8]) if len(current_line) > 8 and current_line[8].isdigit() else 'N/A',
                     }
 
                     recipe_data[name] = recipe
@@ -120,7 +122,7 @@ class RecipeManager:
             json.dump({recipe.name.lower(): recipe.to_dict() for recipe in self.recipes.values()}, f, indent=4)
         add_to_log('[INFO] Finished saving recipes!')
 
-    def create_recipe(self, name, ingredients, measurements, instructions, meal_type, calories, protein, carbs, fat):
+    def create_recipe(self, name, ingredients, measurements, instructions, meal_type, servings, calories, protein, carbs, fat):
         """
         Creates a new recipe.
         """
@@ -131,6 +133,7 @@ class RecipeManager:
                 measurements=measurements,
                 instructions=instructions,
                 meal_type=meal_type,
+                servings=servings,
                 calories=calories,
                 protein=protein,
                 carbs=carbs,
