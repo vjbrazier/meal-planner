@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ recipe.get('name').capitalize() }}</title>
-
-    <!-- Style Reset -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
-
-    <!-- Recipe Page Styling -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/recipe_page.css') }}">
-
-    <!-- Theme -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
-    <script src="{{ url_for('static', filename='js/themes.js') }}"></script>
-</head>
-<body id="webpage">
-    {% include 'themes.html' %}
+{% include 'shared_templates/opener.html' %}
 
     <div id="nav-buttons">
-        <a href="{{ url_for('index') }}">
+        <a href="{{ url_for('homepage') }}">
             <button id="home">Home</button>
         </a>
         <button id="edit">✏️ Edit Recipe</button>
@@ -54,5 +36,6 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+    {% include 'shared_templates/common_scripts.html' %}
+    
+{% include 'shared_templates/closer.html' %}

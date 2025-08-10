@@ -1,0 +1,41 @@
+/* The entire page */
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    --transition: .25s ease-in-out;
+
+    background-color: var(--page-background-color);
+    color: var(--page-text-color);
+
+    transition: var(--transition);
+}
+
+/* Text on the page */
+.page-text {
+    color: var(--page-text-color);
+
+    transition: var(--transition);
+}
+
+.page-text.header {
+    place-self: center;
+    text-align: center;
+}
+
+/* Buttons on the page */
+.page-button {
+    border: 3px solid var(--button-border-color);
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    transition: var(--transition);
+}
+
+.page-button:hover {
+    background-color: var(--button-hover-color);
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}

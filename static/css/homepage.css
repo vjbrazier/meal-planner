@@ -1,40 +1,3 @@
-/* Entire page */
-* {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-body {
-    --transition: .25s ease-in-out;
-
-    background-color: var(--page-background-color);
-    color: var(--page-text-color);
-
-    transition: var(--transition);
-}
-
-.header {
-    place-self: center;
-
-    color: var(--page-text-color);
-
-    transition: var(--transition);
-}
-
-.page-button {
-    border: 3px solid var(--button-border-color);
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
-    transition: var(--transition);
-}
-
-.page-button:hover {
-    background-color: var(--button-hover-color);
-
-    cursor: pointer;
-
-    transition: var(--transition);
-}
-
 /* Recipes */
 #selected-recipe.visible {
     display: block;
@@ -58,7 +21,6 @@ body {
     border: 3px solid var(--button-border-color);
     margin-left: 100px;
     margin-right: 100px;
-    /* background-color: var(--button-hover-color); */
     height: 500px;
     overflow: scroll;
 
@@ -152,10 +114,6 @@ body {
 }
 
 /* Week planner */
-#ingredient-list {
-    place-self: center;
-}
-
 #week-planner {
     display: grid;
 
@@ -192,14 +150,10 @@ body {
     transition: var(--transition);
 }
 
-.weekday-outer-text {
-    color: var(--button-text-color);
+.weekday-outer-element {
     background-color: var(--button-background-color);
     width: 100%;
-
     text-align: center;
-
-    transition: var(--transition);
 }
 
 .weekday-inner-text {
@@ -213,11 +167,8 @@ body {
     padding: 5px 5px 5px 5px;
 }
 
-.clear-weekday:hover {
-    background-color: var(--button-hover-color);
-    cursor: pointer;
-
-    transition: var(--transition);
+.clear-weekday {
+    border: none;
 }
 
 .weekday-multi {

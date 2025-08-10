@@ -41,9 +41,9 @@ def get_recipe_image(image_name, resolution):
         return f'images/placeholder_{resolution}.svg'
 
 @core.app.route('/')
-def index():
+def homepage():
     """
-    The index page.
+    The homepage.
     """
     recipe_names = manager.get_recipe_names()
 
@@ -52,7 +52,7 @@ def index():
     recipe_data = manager.get_recipes()
     recipe_card_data= zip(manager.get_recipe_names(), manager.get_recipe_measurements(), manager.get_recipe_ingredients(), manager.get_recipe_meal_types(), recipe_images)
 
-    return render_template('index.html', recipe_data=recipe_data, recipe_card_data=recipe_card_data)
+    return render_template('homepage.html', page_id='homepage', recipe_data=recipe_data, recipe_card_data=recipe_card_data)
 
 @core.app.route('/<recipe>')
 def recipe_page(recipe):
@@ -66,7 +66,7 @@ def recipe_page(recipe):
 
     recipe_ingredients = zip(recipe.get('measurements'), recipe.get('ingredients'))
 
-    return render_template('recipe_page.html', recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
+    return render_template('recipe_page.html', page_id='recipe_page', recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
 
 if __name__ == '__main__':
     add_to_log('[INFO] Starting server!')

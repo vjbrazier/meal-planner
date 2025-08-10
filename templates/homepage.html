@@ -1,0 +1,41 @@
+{% include 'shared_templates/opener.html' %}
+    <h1 class="page-text header">Meal Planner</h1>
+
+    <h3 data-image="" id="selected-recipe"></h3>
+
+    <div id="recipe-catalog">
+        {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
+            <div class="recipe-card page-button" data-href="{{ url_for('recipe_page', recipe=recipe_name) }}" data-image="{{ url_for('static', filename=recipe_image) }}">
+                <!-- This is invisible. It has an ID of the recipe name, and contains that recipe's data. -->
+                <span class="data-holder" id="{{ recipe_name }}" 
+                    data-measurements="{{ recipe_measurements }}" 
+                    data-ingredients="{{ recipe_ingredients }}" 
+                    data-meal-type="{{ recipe_meal_type }}" 
+                    data-image="{{ url_for('static', filename=recipe_image) }}">
+                </span>
+
+                <h3 class="recipe-name">{{ recipe_name.title() }}</h3>
+                <h3 class="delete-recipe">X</h3>
+            </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <h1 class="page-text header">Upcoming week</h1>
+    <h3 class="page-text header" id="ingredient-list">Ingredients required: </h3>
+    <br>
+
+    <div id="week-planner">
+        {% for day in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %}
+            <div class="weekday-div">
+                <h2 class="page-text weekday-outer-element">{{ day.capitalize() }}</h2>
+                <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
+                <button class="page-button weekday-multi">Set multiple days</button>
+                <h2 class="page-button weekday-outer-element clear-weekday" id="{{ day }}-clear">Clear recipe</h2>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'shared_templates/common_scripts.html' %}
+
+{% include 'shared_templates/closer.html' %}
