@@ -20,6 +20,21 @@ body {
     transition: var(--transition);
 }
 
+.page-button {
+    border: 3px solid var(--button-border-color);
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    transition: var(--transition);
+}
+
+.page-button:hover {
+    background-color: var(--button-hover-color);
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
 /* Recipes */
 #selected-recipe.visible {
     display: block;
@@ -27,6 +42,8 @@ body {
     border: 3px solid var(--button-border-color);
     background-color: var(--button-hover-color);
     color: var(--button-text-color);
+
+    z-index: 255;
 }
 
 #selected-recipe {
@@ -63,10 +80,6 @@ body {
     height: 300px;
     margin-bottom: 50px;
 
-    border: 3px solid var(--button-border-color);
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
-
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -75,8 +88,6 @@ body {
 }
 
 .recipe-card:hover {
-    background-color: var(--button-hover-color);
-    cursor: pointer;
 
     transition: var(--transition);
 }
@@ -160,6 +171,7 @@ body {
 
 .weekday-div {
     border: 3px solid var(--button-border-color);
+    position: relative;
 }
 
 .weekday-button {
@@ -207,3 +219,16 @@ body {
 
     transition: var(--transition);
 }
+
+.weekday-multi {
+    display: none;
+}
+
+.weekday-multi.visible {
+    display: block;
+
+    position: absolute;
+    top: 25px;
+    left: 5px;
+}
+

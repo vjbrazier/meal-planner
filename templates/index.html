@@ -24,7 +24,7 @@
 
     <div id="recipe-catalog">
         {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
-            <div class="recipe-card" data-href="{{ url_for('recipe_page', recipe=recipe_name) }}" data-image="{{ url_for('static', filename=recipe_image) }}">
+            <div class="recipe-card page-button" data-href="{{ url_for('recipe_page', recipe=recipe_name) }}" data-image="{{ url_for('static', filename=recipe_image) }}">
                 <!-- This is invisible. It has an ID of the recipe name, and contains that recipe's data. -->
                 <span class="data-holder" id="{{ recipe_name }}" data-measurements="{{ recipe_measurements }}" data-ingredients="{{ recipe_ingredients }}" data-meal-type="{{ recipe_meal_type }}" data-image="{{ url_for('static', filename=recipe_image) }}"></span>
                 <h3 class="recipe-name">{{ recipe_name.title() }}</h3>
@@ -43,6 +43,7 @@
             <div class="weekday-div">
                 <h2 class="weekday-outer-text">{{ day.capitalize() }}</h2>
                 <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
+                <button class="weekday-multi page-button">Set multiple days</button>
                 <h2 class="weekday-outer-text clear-weekday" id="{{ day }}-clear">Clear recipe</h2>
             </div>
         {% endfor %}

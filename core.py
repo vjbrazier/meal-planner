@@ -7,12 +7,22 @@ import os
 
 # Third Party Imports
 from flask import Flask
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
 
 # Custom Imports
 from planner_logger import add_to_log
 
 # Flask app
 app = Flask(__name__)
+
+# Lemmatizer
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+lemmatizer = WordNetLemmatizer()
 
 # Logs folder path
 logs_folder_path = Path('logs/')

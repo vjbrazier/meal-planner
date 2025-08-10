@@ -11,6 +11,7 @@ let selectedIndex = null;
 const weekday_buttons = document.getElementsByClassName('weekday-button');
 const weekdays_inner_text = document.getElementsByClassName('weekday-inner-text');
 const weekday_clears = document.getElementsByClassName('clear-weekday');
+const weekday_multis = document.getElementsByClassName('weekday-multi');
 
 let weekday_selected = [false, false, false, false, false, false, false]
 
@@ -75,6 +76,7 @@ document.addEventListener('mouseup', () => {
             weekday_buttons[i].style.backgroundImage = `url(${current_recipe_info.getAttribute('data-image')})`;
             weekday_buttons[i].style.backgroundColor = 'var(--button-hover-color)';
             weekdays_inner_text[i].classList.add('visible');
+            weekday_multis[i].classList.add('visible');
             weekdays_inner_text[i].innerText = `${selected_recipe.innerText}`;
         }
     }
@@ -91,5 +93,17 @@ for (let i = 0; i < weekday_clears.length; i++) {
         weekday_buttons[i].style.backgroundImage = 'none';
         weekdays_inner_text[i].innerText = '';
         weekdays_inner_text[i].classList.remove('visible');
+        weekday_multis[i].classList.remove('visible');
     })
 }
+
+// Allows you to set multiple days for one recipe
+for (let i = 0; i < weekday_multis.length; i++) {
+    weekday_multis[i].addEventListener('click', () => {
+        if (weekday_multis[i].classList.contains('visible')) {
+
+        }
+    })
+}
+
+// Compiling ingredient list \\
