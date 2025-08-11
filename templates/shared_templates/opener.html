@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Planner</title>
+    <title>{{ page_name.title() }}</title>
+
+    <!-- Load Socket.IO client from the CDN -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
     <!-- Style Reset -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/shared_css/reset.css') }}">

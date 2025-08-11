@@ -22,7 +22,7 @@
 
     <br>
     <h1 class="page-text header">Upcoming week</h1>
-    <h3 class="page-text header" id="ingredient-list">Ingredients required: </h3>
+    <h3 class="page-text header" id="ingredient-list" data-ingredients="" data-measurements="">Ingredients required: </h3>
     <br>
 
     <div id="week-planner">
@@ -30,12 +30,16 @@
             <div class="weekday-div">
                 <h2 class="page-text weekday-outer-element">{{ day.capitalize() }}</h2>
                 <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
-                <button class="page-button weekday-multi">Set multiple days</button>
-                <h2 class="page-button weekday-outer-element clear-weekday" id="{{ day }}-clear">Clear recipe</h2>
+                <button class="page-button weekday-multi">Spread out recipe: Disabled</button>
+                <h2 class="page-button weekday-outer-element weekday-clear" id="{{ day }}-clear">Clear recipe</h2>
             </div>
         {% endfor %}
     </div>
 
-    {% include 'shared_templates/common_scripts.html' %}
+    <script src="{{ url_for('static', filename='js/{}/{}_elements.js'.format(page_id, page_id)) }}"></script>
+    <script src="{{ url_for('static', filename='js/{}/recipe_catalog.js'.format(page_id)) }}"></script>
+    <script src="{{ url_for('static', filename='js/{}/weekdays.js'.format(page_id)) }}"></script>
+    <script src="{{ url_for('static', filename='js/{}/ingredient_aggregation.js'.format(page_id)) }}"></script>
+    <script src="{{ url_for('static', filename='js/{}/{}.js'.format(page_id, page_id)) }}"></script>
 
 {% include 'shared_templates/closer.html' %}

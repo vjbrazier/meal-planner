@@ -7,6 +7,7 @@ import os
 
 # Third Party Imports
 from flask import Flask
+from flask_socketio import SocketIO
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
@@ -16,6 +17,7 @@ from planner_logger import add_to_log
 
 # Flask app
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 # Lemmatizer
 nltk.download('punkt')

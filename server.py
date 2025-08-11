@@ -12,6 +12,7 @@ from flask import render_template
 import core
 from planner_logger import add_to_log
 from recipe_manager import RecipeManager
+import ingredient_aggregator # Initializes socket listener
 
 # Creates the manager
 manager = RecipeManager()
@@ -52,7 +53,7 @@ def homepage():
     recipe_data = manager.get_recipes()
     recipe_card_data= zip(manager.get_recipe_names(), manager.get_recipe_measurements(), manager.get_recipe_ingredients(), manager.get_recipe_meal_types(), recipe_images)
 
-    return render_template('homepage.html', page_id='homepage', recipe_data=recipe_data, recipe_card_data=recipe_card_data)
+    return render_template('homepage.html', page_id='homepage', page_name="Homepage", recipe_data=recipe_data, recipe_card_data=recipe_card_data)
 
 @core.app.route('/<recipe>')
 def recipe_page(recipe):
@@ -66,11 +67,11 @@ def recipe_page(recipe):
 
     recipe_ingredients = zip(recipe.get('measurements'), recipe.get('ingredients'))
 
-    return render_template('recipe_page.html', page_id='recipe_page', recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
+    return render_template('recipe_page.html', page_id='recipe_page', page_name=recipe_name, recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
 
 if __name__ == '__main__':
     add_to_log('[INFO] Starting server!')
 
-    manager.load_tsv_recipes('data/data.tsv', 'data/instructions.tsv')
+    # manager.load_tsv_recipes('data/data.tsv', 'data/instructions.tsv')
 
-    core.app.run('0.0.0.0', 5000, debug=True)
+    core.socketio.run(core.app, debug=True)
