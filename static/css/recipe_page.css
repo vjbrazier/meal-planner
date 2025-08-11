@@ -129,11 +129,11 @@ body {
 /* Recipe Nutrition */
 #recipe-nutrition {
     display: grid;
-    gap: 100px;
+    gap: 75px;
 
     place-self: center;
 
     padding: 5px 5px 5px 5px;
 
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(5, auto);
 }

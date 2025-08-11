@@ -3,6 +3,22 @@
 
     <h3 data-image="" id="selected-recipe"></h3>
 
+    <div id="search-box">
+        <button id="search-icon"></button>
+        <input id="search-bar" type="text" placeholder="Search...">
+    </div>
+
+    <br>
+
+    <div id="filters">
+        <h2 class="page-text" id="filter-text">Filters: </h1>
+        <button class="page-button filter-button">Breakfast</button>
+        <button class="page-button filter-button">Lunch</button>
+        <button class="page-button filter-button">Dinner</button>
+        <button class="page-button filter-button">Snack</button>
+        <button class="page-button filter-button">Dessert</button>
+    </div>
+
     <div id="recipe-catalog">
         {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
             <div class="recipe-card page-button" data-href="{{ url_for('recipe_page', recipe=recipe_name) }}" data-image="{{ url_for('static', filename=recipe_image) }}">
@@ -37,6 +53,7 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/{}/{}_elements.js'.format(page_id, page_id)) }}"></script>
+    <script src="{{ url_for('static', filename='js/{}/search.js'.format(page_id, page_id)) }}"></script>
     <script src="{{ url_for('static', filename='js/{}/recipe_catalog.js'.format(page_id)) }}"></script>
     <script src="{{ url_for('static', filename='js/{}/weekdays.js'.format(page_id)) }}"></script>
     <script src="{{ url_for('static', filename='js/{}/ingredient_aggregation.js'.format(page_id)) }}"></script>

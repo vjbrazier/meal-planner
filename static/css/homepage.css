@@ -1,3 +1,76 @@
+/* Search bar and filtering*/
+#search-box {
+    margin-left: 75px;
+    margin-top: 5px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#search-icon {
+    background-image: url('../images/search.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    border: 3px solid var(--button-border-color);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-right: 0px solid transparent;
+    
+    padding: 5px 5px 5px 5px;
+    width: 40px;
+    height: 47px;
+    
+    background-color: var(--button-background-color);
+    transition: var(--transition);
+}
+
+#search-bar, #search-bar:focus {
+    border: 3px solid var(--button-border-color);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+    outline: none;
+    
+    padding: 5px 5px 5px 5px;
+    height: 31px;
+    width: 40%;
+
+    font-size: large;
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    transition: var(--transition);
+}
+
+#search-bar::placeholder {
+    color: var(--button-text-color);
+    transition: var(--transition);
+}
+
+#filter-text {
+    place-self: center;
+}
+
+#filters {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+
+    place-self: center;
+
+    gap: 20px;
+    padding: 5px 5px 5px 5px;
+}
+
+.filter-button {
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+}
+
+.filter-button.enabled {
+    background-color: var(--button-hover-color);
+}
+
 /* Recipes */
 #selected-recipe.visible {
     display: block;
@@ -47,6 +120,10 @@
     background-position: center;
 
     transition: var(--transition);
+}
+
+.recipe-card.hidden {
+    display: none;
 }
 
 .recipe-card:hover {

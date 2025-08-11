@@ -1,7 +1,11 @@
 // Elements across the page \\
 const socket = io();
 
+// Searching and filters
+const filter_buttons = document.getElementsByClassName('filter-button');
+
 // Recipe cards
+const data_holders    = document.getElementsByClassName('data-holder');
 const recipe_cards    = document.getElementsByClassName('recipe-card');
 const recipe_names    = document.getElementsByClassName('recipe-name');
 const selected_recipe = document.getElementById('selected-recipe');
