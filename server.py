@@ -55,7 +55,7 @@ def homepage():
 
     return render_template('homepage.html', page_id='homepage', page_name="Homepage", recipe_data=recipe_data, recipe_card_data=recipe_card_data)
 
-@core.app.route('/<recipe>')
+@core.app.route('/recipe/<recipe>')
 def recipe_page(recipe):
     """
     The page for recipes.

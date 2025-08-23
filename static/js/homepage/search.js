@@ -28,19 +28,20 @@ function update_filter() {
 // Enables and disables filters on click.
 for (let i = 0; i < filter_buttons.length; i++) {
     filter_buttons[i].addEventListener('click', () => {
-        console.log('hi');
         meal_filter = filter_buttons[i].innerText.toLowerCase();
         
-        if (filter_buttons[i].classList.contains('enabled')) {
-            filter_buttons[i].classList.remove('enabled');
-            filtered.splice(filtered.indexOf(meal_filter), 1);
-            update_filter();
-        }
-
-        else {
-            filter_buttons[i].classList.add('enabled');
-            filtered.push(meal_filter);
-            update_filter();
+        if (filters.classList.contains('visible')) {
+            if (filter_buttons[i].classList.contains('enabled')) {
+                filter_buttons[i].classList.remove('enabled');
+                filtered.splice(filtered.indexOf(meal_filter), 1);
+                update_filter();
+            }
+    
+            else {
+                filter_buttons[i].classList.add('enabled');
+                filtered.push(meal_filter);
+                update_filter();
+            }
         }
     })
 }

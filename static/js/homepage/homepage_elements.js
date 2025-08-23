@@ -2,6 +2,7 @@
 const socket = io();
 
 // Searching and filters
+const filters = document.getElementById('filters');
 const filter_buttons = document.getElementsByClassName('filter-button');
 
 // Recipe cards
