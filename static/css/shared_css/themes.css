@@ -123,9 +123,10 @@ body[data-theme="light"], #light-button, #light-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #d1d1d1; 
+    --div-border-color: #000000;
     --div-text-color: #000000;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -139,9 +140,10 @@ body[data-theme="dark"], #dark-button, #light-button:hover {
     --button-text-color: #ffffff;
 
     --div-background-color: #6e6e6e; 
+    --div-border-color: #ffffff;
     --div-text-color: #ffffff;
     
-    --border-color: #ffffff;
+    --search-icon: url('../images/search_icons/search_white.png');
     transition: var(--transition);
 }
 
@@ -158,7 +160,7 @@ body[data-theme="red"], #red-button, #red-button:hover {
     --div-border-color: #000000;
     --div-text-color: #000000;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -172,9 +174,10 @@ body[data-theme="pink"], #pink-button, #pink-button:hover {
     --button-text-color: #ff69b4;
 
     --div-background-color: #ffb6c1; 
+    --div-border-color: #ff69b4;
     --div-text-color: #ffffff;
     
-    --border-color: #ff69b4;
+    --search-icon: url('../images/search_icons/search_pink.png');
     transition: var(--transition);
 }
 
@@ -188,9 +191,10 @@ body[data-theme="blue"], #blue-button, #blue-button:hover {
     --button-text-color: #ffffff;
 
     --div-background-color: #0000cd; 
+    --div-border-color: #ffffff;
     --div-text-color: #ffffff;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_white.png');
     transition: var(--transition);
 }
 
@@ -204,9 +208,10 @@ body[data-theme="light blue"], #light-blue-button, #light-blue-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #7cdeff; 
+    --div-border-color: #ffffff;
     --div-text-color: #000000;
     
-    --border-color: #ffffff;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -220,9 +225,10 @@ body[data-theme="green"], #green-button, #green-button:hover {
     --button-text-color: #000000;
     
     --div-background-color: #006400;
+    --div-border-color: #000000;
     --div-text-color: #000000;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -236,9 +242,10 @@ body[data-theme="light green"], #light-green-button, #light-green-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #4cca4c; 
+    --div-border-color: #49aa5e;
     --div-text-color: #000000;
     
-    --border-color: #49aa5e;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -251,10 +258,11 @@ body[data-theme="purple"], #purple-button, #purple-button:hover {
     --button-hover-color: #bea8e9;
     --button-text-color: #000000;
 
-    --div-background-color: #9370d8; 
+    --div-background-color: #7a45e4; 
+    --div-border-color: #000000;
     --div-text-color: #000000;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -268,9 +276,10 @@ body[data-theme="lavender"], #lavender-button, #lavender-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #e1a0f0; 
+    --div-border-color: #4b0082;
     --div-text-color: #4b0082;
     
-    --border-color: #4b0082;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
 
@@ -284,9 +293,10 @@ body[data-theme="orange"], #orange-button, #orange-button:hover {
     --button-text-color: #ffffff;
 
     --div-background-color: #ffa500; 
+    --div-border-color: #ffffff;
     --div-text-color: #ffffff;
     
-    --border-color: #ffffff;
+    --search-icon: url('../images/search_icons/search_white.png');
     transition: var(--transition);
 }
 
@@ -300,8 +310,9 @@ body[data-theme="yellow"], #yellow-button, #yellow-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #ffd700; 
+    --div-border-color: #000000;
     --div-text-color: #000000;
     
-    --border-color: #000000;
+    --search-icon: url('../images/search_icons/search_black.png');
     transition: var(--transition);
 }
