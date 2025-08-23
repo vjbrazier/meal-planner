@@ -17,6 +17,7 @@
                 <h2 id="ingredient-header">Ingredients</h2>
                 {% for measurement, ingredient in recipe_ingredients %}
                     <h3 class="ingredients">{{ measurement }} - {{ ingredient.capitalize() }}</h3>
+                    <br>
                 {% endfor %}
             </div>
         </div>
@@ -33,6 +34,7 @@
             <div id="recipe-instructions">
                 {% for instruction in recipe.get('instructions') %}
                     <h2>Step {{ loop.index }}. {{ instruction }}</h2>
+                    <br>
                 {% endfor %}
             </div>
         </div>

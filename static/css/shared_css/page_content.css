@@ -13,21 +13,19 @@ body {
 }
 
 /* Text on the page */
-.page-text {
-    color: var(--page-text-color);
-
-    transition: var(--transition);
-}
-
-.page-text.header {
+.centered-text {
     place-self: center;
     text-align: center;
+    padding-bottom: 5px;
 }
 
 /* Buttons on the page */
 .page-button {
-    border: 3px solid var(--button-border-color);
+    border: 1px solid var(--button-border-color);
+    border-radius: 10px;
     background-color: var(--button-background-color);
+    padding: 10px 10px 10px 10px;
+
     color: var(--button-text-color);
     transition: var(--transition);
 }

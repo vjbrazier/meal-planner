@@ -1,13 +1,13 @@
 /* Styling for the buttons themselves */
 #toggle-themes-button {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 2px;
+    top: 2px;
 
-    width:  51px;
-    height: 51px;
+    width:  55px;
+    height: 55px;
     
-    border-radius: 25px;
+    border-radius: 27px;
     padding: 5px 5px 5px;
     font-size: small;
 }
@@ -155,6 +155,7 @@ body[data-theme="red"], #red-button, #red-button:hover {
     --button-text-color: #000000;
 
     --div-background-color: #b22222; 
+    --div-border-color: #000000;
     --div-text-color: #000000;
     
     --border-color: #000000;

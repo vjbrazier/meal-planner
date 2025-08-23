@@ -20,8 +20,8 @@ def name_conversion(unit):
     pound = ['lb', 'pound', 'pounds']
     ounce = ['oz', 'ounce', 'ounces']
     cup   = ['cup', 'cups']
-    tbsp  = ['tbsp', 'tablespoon', 'tablespoons']
-    tsp   = ['tsp', 'teaspoon', 'teaspoons']
+    tbsp  = ['tbsp', 'tbsps', 'tablespoon', 'tablespoons']
+    tsp   = ['tsp', 'tsps', 'teaspoon', 'teaspoons']
 
     if unit in pound:
         return 'lb'
@@ -167,8 +167,8 @@ def combine_ingredients(data):
     measurements2 = data['measurements2']
     measurements2 = ast.literal_eval(measurements2)
 
-    print(ingredients2)
-    print(measurements2)
+    # print(ingredients2)
+    # print(measurements2)
 
     ingredients = ingredients1 + ingredients2
     measurements = measurements1 + measurements2

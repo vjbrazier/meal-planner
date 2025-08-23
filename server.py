@@ -72,6 +72,6 @@ def recipe_page(recipe):
 if __name__ == '__main__':
     add_to_log('[INFO] Starting server!')
 
-    # manager.load_tsv_recipes('data/data.tsv', 'data/instructions.tsv')
+    manager.load_tsv_recipes('data/recipes.tsv', 'data/instructions.tsv')
 
     core.socketio.run(core.app, debug=True)

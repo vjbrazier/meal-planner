@@ -54,7 +54,7 @@ class Recipe:
             'measurements': self.measurements,
             'instructions': self.instructions,
             'meal_type': self.meal_type,
-            'sercings': self.servings,
+            'servings': self.servings,
             'calories': self.calories,
             'protein': self.protein,
             'carbs': self.carbs,

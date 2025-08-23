@@ -1,9 +1,23 @@
-/* Search bar and filtering*/
+/* Styling for the header section of the page */
+/* The div containing the content */
+#page-header {
+    height: auto;
+    padding-bottom: 5px;
+
+    background-color: var(--div-background-color);
+    border-bottom: 1px solid var(--div-border-color);
+    
+    place-content: center;
+    transition: var(--transition);
+}
+
+/* Search bar */
 #search-box {
     margin-left: 75px;
     margin-top: 5px;
 
     display: flex;
+    place-self: center;
     flex-direction: row;
 }
 
@@ -13,21 +27,21 @@
     background-repeat: no-repeat;
     background-position: center;
     
-    border: 3px solid var(--button-border-color);
+    border: 1px solid var(--button-border-color);
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     border-right: 0px solid transparent;
     
     padding: 5px 5px 5px 5px;
     width: 40px;
-    height: 47px;
+    height: 43px;
     
     background-color: var(--button-background-color);
     transition: var(--transition);
 }
 
 #search-bar, #search-bar:focus {
-    border: 3px solid var(--button-border-color);
+    border: 1px solid var(--button-border-color);
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-left: none;
@@ -35,7 +49,7 @@
     
     padding: 5px 5px 5px 5px;
     height: 31px;
-    width: 40%;
+    width: 500px;
 
     font-size: large;
     background-color: var(--button-background-color);
@@ -48,24 +62,40 @@
     transition: var(--transition);
 }
 
-#filter-text {
+/* Filters */
+#filter-opener {
+    display: flex;
+
     place-self: center;
 }
 
 #filters {
     display: grid;
-    grid-template-columns: repeat(6, auto);
-
+    opacity: 0;
     place-self: center;
 
-    gap: 20px;
-    padding: 5px 5px 5px 5px;
+    height: 0px;
+    gap: 5px;
+
+    transition: var(--transition);
 }
 
-.filter-button {
-    padding: 20px 20px 20px 20px;
-    border-radius: 10px;
+#filters.visible {
+    display: grid;
+    opacity: 1;
+
+    height: 100%;
+
+    transition: var(--transition);
 }
+
+.filter-subcategory {
+    padding: 5px 5px 5px 5px;
+    border: 1px solid var(--div-border-color);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
 
 .filter-button.enabled {
     background-color: var(--button-hover-color);

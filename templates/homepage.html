@@ -1,23 +1,42 @@
 {% include 'shared_templates/opener.html' %}
-    <h1 class="page-text header">Meal Planner</h1>
-
-    <h3 data-image="" id="selected-recipe"></h3>
-
-    <div id="search-box">
-        <button id="search-icon"></button>
-        <input id="search-bar" type="text" placeholder="Search...">
+    <div id="page-header">
+        <br>
+        <h1 class="centered-text">Recipe Catalog</h1>
+        <h3 class="centered-text">View recipes and plan out your weeks instantly.</h3>
+        
+        <div id="search-box">
+            <button id="search-icon"></button>
+            <input id="search-bar" type="text" placeholder="Search...">
+        </div>
+    
+        <br>
+        <button id="filter-opener" class="page-button">View filters</button>
+        <br>
+        <div id="filters">
+            <div id="meal-type-filters" class="filter-subcategory">
+                <h3 class="centered-text">Meal types</h3>
+                <!-- <br> -->
+                <button class="page-button filter-button">Breakfast</button>
+                <button class="page-button filter-button">Lunch</button>
+                <button class="page-button filter-button">Dinner</button>
+                <button class="page-button filter-button">Side</button>
+                <button class="page-button filter-button">Snack</button>
+                <button class="page-button filter-button">Dessert</button>
+            </div>
+            <div id="type-filters" class="filter-subcategory">
+                <h3 class="centered-text">Recipe types</h3>
+                <!-- <br> -->
+                <button class="page-button filter-button">Dehydration</button>
+                <button class="page-button filter-button">Seasoning</button>
+                <button class="page-button filter-button">Sauce</button>
+            </div>
+        </div>
     </div>
 
     <br>
 
-    <div id="filters">
-        <h2 class="page-text" id="filter-text">Filters: </h1>
-        <button class="page-button filter-button">Breakfast</button>
-        <button class="page-button filter-button">Lunch</button>
-        <button class="page-button filter-button">Dinner</button>
-        <button class="page-button filter-button">Snack</button>
-        <button class="page-button filter-button">Dessert</button>
-    </div>
+    <h3 data-image="" id="selected-recipe"></h3>
+
 
     <div id="recipe-catalog">
         {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
