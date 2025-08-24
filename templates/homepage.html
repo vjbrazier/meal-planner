@@ -39,7 +39,7 @@
         {% for recipe_name, recipe_measurements, recipe_ingredients, recipe_meal_type, recipe_image in recipe_card_data %}
         <div class="recipe-card">
             <!-- This is invisible. It has an ID of the recipe name, and contains that recipe's data. -->
-            <span class="data-holder" id="{{ recipe_name }}" 
+            <span class="data-holder" id="{{ recipe_name.replace(' ', '-') }}" 
                 data-measurements="{{ recipe_measurements }}" 
                 data-ingredients="{{ recipe_ingredients }}" 
                 data-meal-type="{{ recipe_meal_type }}" 
@@ -57,22 +57,35 @@
     </div>
 
     <br>
+    
     <h1 class="centered-text">Upcoming week</h1>
     <div id="ingredient-list" data-ingredients="" data-measurements="">
         <h3 class="centered-text">Ingredients</h3>
     </div>
     <br>
 
+    <h5 class="centered-text" id="spread-tooltip">Spreading a recipe means you make it once, but use it on multiple days.<br> 
+                                                  For example: a recipe that makes two servings, could be used on two days. <br>
+                                                  You can use this feature to fill the week without doubling ingredients.</h5>
+    <h5 class="centered-text" id="spread-warning">You are currently spreading a recipe!</h5>
     <div id="week-planner">
         {% for day in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] %}
             <div class="weekday-div">
-                <h2 class="page-text weekday-outer-element">{{ day.capitalize() }}</h2>
-                <button class="weekday-button" id="{{ day }}"><span class="weekday-inner-text"></span></button>
-                <button class="page-button weekday-multi">Spread out recipe: Disabled</button>
-                <h2 class="page-button weekday-outer-element weekday-clear" id="{{ day }}-clear">Clear recipe</h2>
+                <h3 class="centered-text">{{ day.capitalize() }}</h3>
+
+                <div class="weekday">
+                    <h4 class="weekday-placeholder visible">No planned meals</h4>
+                    <div class="planned-meals">
+
+                    </div>
+                    <br>
+                    <button class="add-meals page-button">+ Add Meal +</button>
+                </div>
             </div>
         {% endfor %}
     </div>
+
+    <br>
 
     <script src="{{ url_for('static', filename='js/{}/{}_elements.js'.format(page_id, page_id)) }}"></script>
     <script src="{{ url_for('static', filename='js/{}/search.js'.format(page_id, page_id)) }}"></script>

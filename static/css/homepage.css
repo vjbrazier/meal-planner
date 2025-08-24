@@ -177,6 +177,7 @@
     width: 300px;
     height: 300px;
     object-fit: contain;
+    border-radius: 10px;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -259,12 +260,20 @@
     transition: var(--transition);
 }
 
+#spread-warning {
+    font-size: 0px;
+    transition: var(--transition);
+}
+
+#spread-warning.visible {
+    font-size: 0.83em;
+    transition: var(--transition);
+}
+
 #week-planner {
     display: grid;
 
     place-self: center;
-    /* padding: 5px 5px 5px 5px; */
-    border: 3px solid var(--button-border-color);
     gap: 15px;
 
     grid-template-columns: repeat(7, auto);
@@ -273,58 +282,61 @@
 }
 
 .weekday-div {
-    border: 3px solid var(--button-border-color);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border: 1px solid var(--button-border-color);
+    border-radius: 10px;
+
+    height: auto;
+    width: 200px;
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+    padding-bottom: 30px;
 }
 
-.weekday-button {
-    width: 225px;
-    height: 225px;
+.weekday {
+    place-items: center;
+}
 
-    border: none;
-    border-top: 3px solid var(--button-border-color);
-    border-bottom: 3px solid var(--button-border-color);
+.weekday-placeholder {
+    display: none;
+}
 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+.weekday-placeholder.visible {
+    display: block;
+}
 
+.planned-meals {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 0px;
+    row-gap: 5px;
+}
+
+.recipe-button, .spread-button, .clear-button {
     background-color: var(--button-background-color);
+    border: 1px solid var(--button-border-color);
+    padding: 5px 5px 5px 5px;
     color: var(--button-text-color);
 
     transition: var(--transition);
 }
 
-.weekday-outer-element {
-    background-color: var(--button-background-color);
-    width: 100%;
-    text-align: center;
+.recipe-button:hover, .spread-button:hover, .clear-button:hover {
+    background-color: var(--button-hover-color);
+
+    transition: var(--transition);
 }
 
-.weekday-inner-text {
-    visibility: none;
+.recipe-button {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
-.weekday-inner-text.visible {
-    visibility: visible;
-    border: 3px solid var(--button-border-color);
-    background-color: var(--button-background-color);
-    padding: 5px 5px 5px 5px;
+.clear-button {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
-
-.clear-weekday {
-    border: none;
-}
-
-.weekday-multi {
-    display: none;
-}
-
-.weekday-multi.visible {
-    display: block;
-
-    position: absolute;
-    top: 30px;
-    left: -3px;
-}
-
