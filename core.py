@@ -10,7 +10,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 import nltk
 from nltk.stem import WordNetLemmatizer
-from nltk.corpus import wordnet
+# from nltk.corpus import wordnet
 
 # Custom Imports
 from planner_logger import add_to_log

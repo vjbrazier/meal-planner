@@ -243,21 +243,41 @@
 
 /* Styling for the week planner */
 /* Ingredient list */
-#ingredient-list {
+label {
+    text-decoration: none;
+
+    transition: var(--transition);
+}
+
+input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+
+    transition: var(--transition);
+}
+
+#ingredient-div {
     display: none;
 }
 
-#ingredient-list.visible {
+#ingredient-div.visible {
     display: flex;
+    flex-direction: column;
 
     border: 1px solid var(--div-border-color);
     border-radius: 10px;
     background-color: var(--div-background-color);
 
     place-self: center;
-    width: 75%;
+    padding: 5px 5px 5px 5px;
+    width: auto;
 
     transition: var(--transition);
+}
+
+#ingredient-list {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 5px;
 }
 
 #spread-warning {

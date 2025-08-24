@@ -13,60 +13,133 @@ from flask_socketio import emit
 from planner_logger import add_to_log
 from core import socketio, lemmatizer
 
-def name_conversion(unit):
+# Helper functions for the Socket listener
+def clean_data(data):
+    """
+    Normalizes data by stripping and lowering it.
+    """
+    normalized = []
+
+    for item in data:
+        normalized.append(item.strip().lower())
+
+    return normalized
+
+def split_measurements(measurements):
+    """
+    Splits measurements from '1 tsp' to [1, 'tsp'] or similar.
+    """
+    split_measurements = []
+
+    for measurement in measurements:
+        if ' ' in measurement:
+            split_measurements.append(measurement.split(' '))
+        else:
+            split_measurements.append(measurement)
+
+    return split_measurements
+
+def simplify_unit(unit):
     """
     Simplifies the name of the unit provided.
     """
-    pound = ['lb', 'pound', 'pounds']
-    ounce = ['oz', 'ounce', 'ounces']
-    cup   = ['cup', 'cups']
-    tbsp  = ['tbsp', 'tbsps', 'tablespoon', 'tablespoons']
-    tsp   = ['tsp', 'tsps', 'teaspoon', 'teaspoons']
+    units = {
+        'lb'  : ['lb', 'pound', 'pounds'],
+        'oz'  : ['oz', 'ounce', 'ounces'],
+        'cup' : ['cup', 'cups'],
+        'tbsp': ['tbsp', 'tbsps', 'tablespoon', 'tablespoons'],
+        'tsp' : ['tsp', 'tsps', 'teaspoon', 'teaspoons']
+    }
 
-    if unit in pound:
-        return 'lb'
-
-    if unit in ounce:
-        return 'oz'
-
-    if unit in cup:
-        return 'cup'
-
-    if unit in tbsp:
-        return 'tbsp'
-
-    if unit in tsp:
-        return 'tsp'
+    for simple_name, other_names in units.items():
+        if unit in other_names:
+            return simple_name
 
     add_to_log(f'[WARN] It seems an invalid unit was provided: {unit}')
 
-value_conversions = {
-    'lb': 1,      # Conversion to pounds.
-    'oz': 0.0625, # Conversion to pounds. Divide by 16.
-    'cup': 8,     # Conversion to ounces. Multiply by 8.
-    'tbsp': 0.5,  # Conversion to ounces. Divide by 2.
-    'tsp': 0.1666 # Conversion to ounces. Divide by 6.
-}
-
-unit_conversions = {
-    'lb': 'lb',
-    'oz': 'lb',
-    'cup': 'oz',
-    'tbsp': 'oz',
-    'tsp': 'oz'
-}
-
 def convert_unit(measurement, unit):
     """
-    Converts the unit to its generalized version
+    Converts the unit's name and value.
     """
-    unit = name_conversion(unit)
-    new_measurement = round((measurement * value_conversions.get(unit)), 2)
-    new_unit = unit_conversions.get(unit)
+    value_conversions = {
+        'lb': 1,      # Conversion to pounds.
+        'oz': 0.0625, # Conversion to pounds. Divide by 16.
+        'cup': 8,     # Conversion to ounces. Multiply by 8.
+        'tbsp': 0.5,  # Conversion to ounces. Divide by 2.
+        'tsp': 0.1666 # Conversion to ounces. Divide by 6.
+    }
 
-    return [new_measurement, new_unit]
+    unit_conversions = {
+        'lb': 'lb',
+        'oz': 'lb',
+        'cup': 'oz',
+        'tbsp': 'oz',
+        'tsp': 'oz'
+    }
 
-def merge_ingredients(ingredients, measurements):
+    unit = simplify_unit(unit)
+    return [round(measurement * value_conversions.get(unit), 2), unit_conversions.get(unit)]
+
+def normalize_measurements(measurements):
+    """
+    Normalizes measurements to a standardized unit.
+    """
+    normalized_measurements = []
+
+    for item in measurements:
+        # Check if it is '1' vs [1, 'tsp']
+        if isinstance(item, list):
+            measurement = item[0]
+            unit = item[1]
+
+            normalized_measurements.append(convert_unit(float(measurement), unit))
+        else:
+            normalized_measurements.append(float(measurement))
+
+    return normalized_measurements
+
+@socketio.on('aggregate_ingredients')
+def aggregate_ingredients(data):
+    """
+    Lemmatizes the ingredients, and makes their measurements all normalized.
+    """
+    # Convert JS data passed into actual Python data
+    data_ingredients  = data['ingredients']
+    data_ingredients  = ast.literal_eval(data_ingredients)
+
+    data_measurements = data['measurements']
+    data_measurements = ast.literal_eval(data_measurements)
+
+    # Put clean data into new arrays
+    ingredients   = clean_data(data_ingredients)
+    measurements = clean_data(data_measurements)
+
+    # Lemmatizes all the ingredients
+    ingredients = [lemmatizer.lemmatize(ingredient, pos='n') for ingredient in ingredients]
+
+    # Split up the measurements
+    measurements = split_measurements(measurements)
+
+    # Normalize all the measurements
+    measurements = normalize_measurements(measurements)
+
+    # Emit the data back to JS.
+    emit('append_ingredients', {
+        'ingredients' : ingredients,
+        'measurements': measurements,
+        'modified'    : False
+    })
+
+# Merging and removal of existing ingredients
+def ensure_list(data):
+    """
+    Prior to using ast, it confirms whether a string or list was passed.
+    """
+    if isinstance(data, str):
+        return ast.literal_eval(data)
+    return data
+
+def correct_ingredients(ingredients, measurements, modification):
     """
     Merges ingredients that are the same.
     """
@@ -78,109 +151,95 @@ def merge_ingredients(ingredients, measurements):
             measurement2 = measurements[second_index]
 
             if not isinstance(measurement1, list):
-                measurements[index] = measurement1 + measurement2
+                if modification == 'merge':
+                    measurements[index] = measurement1 + measurement2
+                else:
+                    measurements[index] = measurement1 - measurement2
+
                 ingredients.pop(second_index)
                 measurements.pop(second_index)
             else:
-                measurements[index][0] = measurement1[0] + measurement2[0]
+                if modification == 'merge':
+                    measurements[index][0] = measurement1[0] + measurement2[0]
+                else:
+                    measurements[index][0] = measurement1[0] - measurement2[0]
+
                 ingredients.pop(second_index)
                 measurements.pop(second_index)
-
             break
 
-@socketio.on('aggregate_ingredients')
-def aggregate_ingredients(data=None, data_ingredients=None, data_measurements=None, skip_merge=False,
-                          return_ingredients=False, return_measurements=False):
+def remove_outliers(ingredients, measurements):
     """
-    Lemmatizes the ingredients, and makes their measurements all normalized.
+    Removes outliers from float precision errors, such as 0.00000001 tsp.
     """
-    if data_ingredients is None:
-        data_ingredients = data['ingredients']
-        data_ingredients = ast.literal_eval(data_ingredients)
+    indices = []
 
-    if data_measurements is None:
-        data_measurements = data['measurements']
-        data_measurements = ast.literal_eval(data_measurements)
-
-    ingredients = []
-    measurements = []
-
-    # Normalize all the data first
-    for item1, item2 in zip(data_ingredients, data_measurements):
-        item1 = item1.strip().lower()
-        ingredients.append(item1)
-
-        item2 = item2.strip().lower()
-        measurements.append(item2)
-
-    # Lemmatize all the ingredients
-    ingredients = [lemmatizer.lemmatize(ingredient, pos='n') for ingredient in ingredients]
-
-    # Split up the measurements appropriately
-    split_measurements = []
-    for measurement in measurements:
-        if ' ' in measurement:
-            split_measurements.append(measurement.split(' '))
-        else :
-            split_measurements.append(measurement)
-
-    # Normalizes all measurements
-    for index, item in enumerate(split_measurements):
-        if isinstance(item, list):
-            measurement = item[0]
-            unit = item[1]
-
-            split_measurements[index] = [convert_unit(float(measurement), unit)][0]
+    for index, measurement in enumerate(measurements):
+        # 1/8 tsp, the smallest, is 0.02173 oz roughly
+        if isinstance(measurement, list):
+            if measurement[0] < 0.021:
+                indices.append(index)
         else:
-            split_measurements[index] = float(split_measurements[index])
+            if measurement < 0.021:
+                indices.append(index)
 
-    # print(ingredients)
-    # print(split_measurements)
+    # Goes through backwards to prevent index bound errors
+    for index in reversed(indices):
+        ingredients.pop(index)
+        measurements.pop(index)
 
-    if return_ingredients:
-        return ingredients
-    
-    if return_measurements:
-        return split_measurements
-
-    if not skip_merge:
-        counts = Counter(ingredients)
-        duplicates = {item: count for item, count in counts.items() if count > 1}
-
-        while duplicates:
-            merge_ingredients(ingredients, split_measurements)
-            counts = Counter(ingredients)
-            duplicates = {item: count for item, count in counts.items() if count > 1}
-
-        emit('append_ingredients', {'ingredients': ingredients, 'measurements': split_measurements, 'combined': False})
-
-@socketio.on('combine_ingredients')
-def combine_ingredients(data):
+@socketio.on('modify_ingredients')
+def modify_ingredients(data):
     """
-    Combines two lists before aggregating them.
+    Modifies two lists before aggregating them.
     """
+    # Gather and convert data as necessary
     ingredients1 = data['ingredients1']
     ingredients2 = data['ingredients2']
-    ingredients2 = ast.literal_eval(ingredients2)
 
     measurements1 = data['measurements1']
     measurements2 = data['measurements2']
-    measurements2 = ast.literal_eval(measurements2)
 
-    # print(ingredients2)
-    # print(measurements2)
+    ingredients1  = ensure_list(ingredients1)
+    ingredients2  = ensure_list(ingredients2)
+    measurements1 = ensure_list(measurements1)
+    measurements2 = ensure_list(measurements2)
 
+    modification = data['modification']
+
+    # Remove is called from the clear button. This means the data stored is untouched, and needs to be
+    if modification == 'remove':
+        # Put clean data into new arrays
+        ingredients2   = clean_data(ingredients2)
+        measurements2 = clean_data(measurements2)
+
+        # Lemmatizes all the ingredients
+        ingredients2 = [lemmatizer.lemmatize(ingredient, pos='n') for ingredient in ingredients2]
+
+        # Split up the measurements
+        measurements2 = split_measurements(measurements2)
+
+        # Normalize all the measurements
+        measurements2 = normalize_measurements(measurements2)
+
+    # Merge the lists of data
     ingredients = ingredients1 + ingredients2
     measurements = measurements1 + measurements2
 
+    # This counter finds duplicates, as long as they exist, it will continue correcting
     counts = Counter(ingredients)
     duplicates = {item: count for item, count in counts.items() if count > 1}
 
     while duplicates:
-        merge_ingredients(ingredients, measurements)
+        correct_ingredients(ingredients, measurements, modification)
         counts = Counter(ingredients)
         duplicates = {item: count for item, count in counts.items() if count > 1}
-    
-    # print(ingredients)
-    # print(measurements)
-    emit('append_ingredients', {'ingredients': ingredients, 'measurements': measurements, 'combined': True})
+
+    # Removes outliers in the data
+    remove_outliers(ingredients, measurements)
+
+    emit('append_ingredients', {
+        'ingredients': ingredients, 
+        'measurements': measurements, 
+        'modified': True
+    })
