@@ -276,7 +276,7 @@ input[type="checkbox"]:checked + label {
 
 #ingredient-list {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(10, auto);
     gap: 5px;
 }
 

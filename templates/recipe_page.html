@@ -2,42 +2,63 @@
 
     <div id="nav-buttons">
         <a href="{{ url_for('homepage') }}">
-            <button id="home">Home</button>
+            <button class="page-button" id="home">Home</button>
         </a>
-        <button id="edit">✏️ Edit Recipe</button>
+        <button class="page-button" id="edit">✏️ Edit Recipe</button>
     </div>
 
     <br>
 
-    <div id="recipe-div">
-        <div id="recipe-info">
-            <h1>{{ recipe.get('name').title() }}</h1>
-            <img id="recipe-image" src="{{ url_for('static', filename=recipe_image) }}">
-            <div id="ingredients">
-                <h2 id="ingredient-header">Ingredients</h2>
-                {% for measurement, ingredient in recipe_ingredients %}
-                    <h3 class="ingredients">{{ measurement }} - {{ ingredient.capitalize() }}</h3>
-                    <br>
-                {% endfor %}
-            </div>
+    <div id="header">
+        <div id="header-info">
+            <h1 id="recipe-name">{{ recipe.get('name').title() }}</h1>
+            <br>
+            <h3>Serves {{ recipe.get('servings') }} people!</h3>
         </div>
-
-        <div id="filler">
-            <div id="recipe-nutrition">
-                <h2>Servings - {{ recipe.get('servings') }}</h2>
-                <h2>Calories - {{ recipe.get('calories') }}</h2>
-                <h2>Protein  - {{ recipe.get('protein') }}</h2>
-                <h2>Carbs    - {{ recipe.get('carbs') }}</h2>
-                <h2>Fat      - {{ recipe.get('fat') }}</h2>
-            </div>
-    
-            <div id="recipe-instructions">
-                {% for instruction in recipe.get('instructions') %}
-                    <h2>Step {{ loop.index }}. {{ instruction }}</h2>
-                    <br>
-                {% endfor %}
-            </div>
+        <div id="image-wrapper">
+            <img id="header-image" src="{{ url_for('static', filename=recipe_image) }}">
         </div>
     </div>
+
+    <br>
+
+    <h2 class="centered-text">Nutrition Information</h2>
+    <br>
+    <div id="nutrition">
+        <h2 class="nutrition-box">{{ recipe.get('calories') }}<br>Calories</h2>
+        <h2 class="nutrition-box">{{ recipe.get('protein') }}g<br>Protein</h2>
+        <h2 class="nutrition-box">{{ recipe.get('carbs') }}g  <br>Carbs</h2>
+        <h2 class="nutrition-box">{{ recipe.get('fat') }}g    <br>Fat</h2>
+    </div>
+
+    <br> <br>
+
+    <h2 class="centered-text">Ingredients</h2>
+    <br>
+    <div id="ingredients">
+        {% for measurement, ingredient in recipe_ingredients %}
+            <h3 class="measurements">{{ measurement }} {{ ingredient.title() }}</h3>
+        {% endfor %}
+    </div>
+    <br>
+
+    <h2 class="centered-text">Spoons needed</h2>
+    <h3 id="spoons" class="centered-text"></h3>
+
+    <br>
+
+    <h2 class="centered-text">Instructions</h2>
+    <br>
+    <div id="instructions">
+        {% for instruction in recipe.get('instructions') %}
+            <div class="instruction">
+                <h3 class="step-number">{{ loop.index }}</h3>
+                <h3 class="instruction-text">{{ instruction }}</h3>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+    <br>
     
+    <script src="{{ url_for('static', filename='js/recipe_page.js') }}"></script>
 {% include 'shared_templates/closer.html' %}

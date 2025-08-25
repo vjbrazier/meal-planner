@@ -1,141 +1,147 @@
-* {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-body {
-    --transition: .25s ease-in-out;
-
-    background-color: var(--page-background-color);
-    color: var(--page-text-color);
-
-    transition: var(--transition);
-}
-
 /* Navigation */
 #nav-buttons {
     display: flex;
     gap: 15px;
+    padding: 5px 5px 5px 5px;
+}
+
+#home, #edit {
+    width: 125px;
+    height: 50px;
+    border-radius: 100px;
 }
 
 #home {
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
-
     width: 75px;
-    height: 75px;
+}
 
-    border: 3px solid var(--button-border-color);
-    border-radius: 100px;
+/* Header section */
+#header {
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+    background-color: var(--div-background-color);
+    border-top: 1px solid var(--div-border-color);
+    border-bottom: 1px solid var(--div-border-color);
+
+    height: 20%;
 
     transition: var(--transition);
 }
 
-#home:hover {
-    background-color: var(--button-hover-color);
+#header-info {
+    place-self: center;
+}
+
+#recipe-name {
+    width: 500px;
+}
+
+#image-wrapper {
+    display: flex;
+
+    width:  500px;
+    height: 500px;
+    place-self: center;
+}
+
+#header-image {
+    display: block;
+    width:  auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+
+    margin: 50px 50px 50px 50px;
+
+    border: 1px solid var(--div-border-color);
+    border-radius: 10px; 
 
     transition: var(--transition);
 }
 
-#edit {
-    background-color: var(--button-background-color);
-    color: var(--button-text-color);
+/* Nutrition */
+#nutrition {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    width: 66%;
 
-    margin-top: 12.5px;
+    place-self: center;
+}
+
+.nutrition-box {
+    padding: 10px 10px 10px 10px;
 
     width: 125px;
-    height: 50px;
+    height: 105px;
+    text-align: center;
+    place-content: center;
 
-    border: 3px solid var(--button-border-color);
-    border-radius: 100px;
-
-    transition: var(--transition);
-}
-
-#edit:hover {
-    background-color: var(--button-hover-color);
-    
-    transition: var(--transition);
-}
-
-/* The recipe container */
-#recipe-div {
-    display: grid;
-
-    grid-template-columns: repeat(2, auto);
-}
-
-/* Borders */
-#recipe-info {
-    place-self: center;
     border-radius: 10px;
-    border: 3px solid var(--button-border-color);
-    width: 500px;
-    text-align: center;
+    border: 1px solid var(--div-border-color);
+    background-color: var(--div-background-color);
+    box-shadow: 0px 0px 5px 5px var(--button-hover-color);
 
     transition: var(--transition);
 }
 
-#recipe-nutrition {
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    border: 3px solid var(--button-border-color);
-    border-bottom: 0px solid transparent;
-
-    transition: var(--transition);
-}
-
-#recipe-instructions {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border: 3px solid var(--button-border-color);
-    border-left: 0px solid transparent;
-
-    transition: var(--transition);
-}
-
-
-/* Recipe info */
-#recipe-image {
-    width: 500px;
-    height: 500px;
-
-    border-top: 3px solid var(--button-border-color);
-    border-bottom: 3px solid var(--button-border-color);
-    background-color: var(--button-hover-color);
-
-    object-fit: contain;
-    place-self: center;
-
-    transition: var(--transition);
-}
-
-#ingredient-header {
-    place-self: center;
-    text-decoration: underline;
-}
-
-.ingredients {
-    place-self: center;
-}
-
-/* Recipe instructions */
-#recipe-instructions {
-    margin: 0px 50px 50px 0px;
-    place-items: center;
-}
-
-#recipe-instructions > h2 {
-    text-align: center;
-}
-
-/* Recipe Nutrition */
-#recipe-nutrition {
+/* Ingredients */
+#ingredients {
     display: grid;
-    gap: 75px;
-
+    grid-template-columns: repeat(2, auto);
+    column-gap: 50px;
+    width: 50%;
     place-self: center;
+    padding: 10px 10px 10px 10px;
 
-    padding: 5px 5px 5px 5px;
+    border: 1px solid var(--div-border-color);
+    background-color: var(--div-background-color);
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 5px var(--button-hover-color);
 
-    grid-template-columns: repeat(5, auto);
+    transition: var(--transition);
+}
+
+/* Instructions */
+#instructions {
+    border: 1px solid var(--div-border-color);
+    background-color: var(--div-background-color);
+    border-radius: 10px;
+    width: 75%;
+    place-self: center;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0px 0px 5px 5px var(--button-hover-color);
+
+    transition: var(--transition);
+}
+
+.instruction {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+}
+
+.step-number {
+    border: 1px solid var(--div-border-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+
+    padding: 2px 2px 2px 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 20px;
+    text-align: center;
+
+    color: var(--button-text-color);
+    background-color: var(--page-background-color);
+
+    transition: var(--transition);
+}
+
+.instruction-text {
+    align-self: center;
 }

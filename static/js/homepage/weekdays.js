@@ -168,7 +168,7 @@ function create_planned_meal(index, spread_meal) {
                 for (let j = 0; j < recipe_buttons.length; j++) {
                     let inner_spread = clear_buttons[j].getAttribute('data-spread');
 
-                    if ((inner_spread == 'spread') && (recipe_buttons[i].innerText == recipe_buttons[i].innerText)) {
+                    if ((inner_spread == 'spread') && (recipe_buttons[i].innerText == recipe_buttons[j].innerText)) {
                         recipe_buttons[j].remove();
                         spread_buttons[j].remove();
                         clear_buttons[j].remove();
