@@ -113,10 +113,24 @@ class RecipeManager:
         self.recipes.update(self.load_input_recipes(recipe_data))
         self.save_recipes()
 
+    def sort_recipes(self):
+        """
+        Sorts the recipes alphabetically by name.
+        """
+        sorted_names = sorted(self.recipes.keys())
+        sorted_recipes = {}
+
+        for recipe in sorted_names:
+            sorted_recipes.setdefault(recipe, self.recipes.get(recipe))
+
+        self.recipes = sorted_recipes
+
     def save_recipes(self):
         """
         Saves current recipes to the JSON.
         """
+        self.sort_recipes()
+
         add_to_log('[INFO] Saving current recipes...')
         with open(self.recipe_data_path, 'w', encoding='utf-8') as f:
             json.dump({recipe.name.lower(): recipe.to_dict() for recipe in self.recipes.values()}, f, indent=4)
@@ -140,6 +154,23 @@ class RecipeManager:
                 fat=fat
             )
         self.save_recipes()
+
+    def delete_recipe(self, recipe):
+        """
+        Deletes a recipe, then refreshes the data.
+        """
+        self.recipes.pop(recipe)
+        self.save_recipes()
+
+    def contains_recipe(self, recipe):
+        """
+        Checks if a recipe exists in its live memory.
+        """
+        exists = recipe in self.recipes
+        if not exists:
+            add_to_log(f'[WARN]It seems a non-existent recipe was tried to be deleted: {recipe}')
+            
+        return exists
 
     def get_recipe_names(self):
         """

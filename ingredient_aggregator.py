@@ -16,14 +16,9 @@ from core import socketio, lemmatizer
 # Helper functions for the Socket listener
 def clean_data(data):
     """
-    Normalizes data by stripping and lowering it.
+    Cleans data by stripping and lowering it.
     """
-    normalized = []
-
-    for item in data:
-        normalized.append(item.strip().lower())
-
-    return normalized
+    return [item.strip().lower() for item in data]
 
 def split_measurements(measurements):
     """
@@ -56,6 +51,7 @@ def simplify_unit(unit):
             return simple_name
 
     add_to_log(f'[WARN] It seems an invalid unit was provided: {unit}')
+    return unit
 
 def convert_unit(measurement, unit):
     """
@@ -86,6 +82,7 @@ def normalize_measurements(measurements):
     """
     normalized_measurements = []
 
+    print(measurements)
     for item in measurements:
         # Check if it is '1' vs [1, 'tsp']
         if isinstance(item, list):
@@ -94,7 +91,7 @@ def normalize_measurements(measurements):
 
             normalized_measurements.append(convert_unit(float(measurement), unit))
         else:
-            normalized_measurements.append(float(measurement))
+            normalized_measurements.append(float(item))
 
     return normalized_measurements
 

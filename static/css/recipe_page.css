@@ -102,6 +102,14 @@
     transition: var(--transition);
 }
 
+#spoons-header {
+    display: none;
+}
+
+#spoons-header.visible {
+    display: block;
+}
+
 /* Instructions */
 #instructions {
     border: 1px solid var(--div-border-color);

@@ -14,28 +14,18 @@ document.getElementById('filter-opener').addEventListener('click', () => {
     filters.classList.toggle('visible');
 })
 
-// RECIPE_CATALOG + WEEKDAYS combination \\
-// Updates the weekday once you stop holding click
-// document.addEventListener('mouseup', () => {
-//     for (let i = 0; i < weekday_selected.length; i++) {
-//         if ((weekday_selected[i] == true) && (selected == true)) {
-//             let recipe = selected_recipe.innerText.toLowerCase();
-//             let current_recipe_info = document.getElementById(recipe);
+// Delete functionality
+for (let i = 0; i < delete_recipes.length; i++) {
+    delete_recipes[i].addEventListener('click', () => {
+        let recipe = data_holders[i].id.replaceAll('-', ' ');
 
-//             socket.emit('aggregate_ingredients', data={
-//                 ingredients: current_recipe_info.getAttribute('data-ingredients'),
-//                 measurements: current_recipe_info.getAttribute('data-measurements')
-//             });
+        socket.emit('delete-recipe', data={
+            recipe: recipe
+        });
+    })
+}
 
-//             weekday_buttons[i].style.backgroundImage = `url(${current_recipe_info.getAttribute('data-image')})`;
-//             weekday_buttons[i].style.backgroundColor = 'var(--button-hover-color)';
-//             weekday_inner_text[i].classList.add('visible');
-//             weekday_multis[i].classList.add('visible');
-//             weekday_inner_text[i].innerText = `${selected_recipe.innerText}`;
-//         }
-//     }
-
-//     selected = false;
-//     selectedIndex = null; 
-//     selected_recipe.classList.remove('visible');
-// })
+// Refreshes the page to update the recipe cards upon deletion
+socket.on('recipe-deleted', () => {
+    window.location.reload();
+})

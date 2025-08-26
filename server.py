@@ -69,9 +69,19 @@ def recipe_page(recipe):
 
     return render_template('recipe_page.html', page_id='recipe_page', page_name=recipe_name, recipe=recipe, recipe_ingredients=recipe_ingredients, recipe_image=recipe_image)
 
+@core.socketio.on('delete-recipe')
+def delete_recipe(data):
+    recipe_to_delete = data['recipe']
+
+    # recipe_to_delete = recipe_to_delete.title()
+
+    if manager.contains_recipe(recipe_to_delete):
+        manager.delete_recipe(recipe_to_delete)
+        core.socketio.emit('recipe-deleted')
+
 if __name__ == '__main__':
     add_to_log('[INFO] Starting server!')
 
-    # manager.load_tsv_recipes('data/recipes.tsv', 'data/instructions.tsv')
+    manager.load_tsv_recipes('data/recipes.tsv', 'data/instructions.tsv')
 
     core.socketio.run(core.app, debug=True)

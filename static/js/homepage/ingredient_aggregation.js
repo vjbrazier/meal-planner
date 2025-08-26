@@ -44,7 +44,7 @@ socket.on('append_ingredients', (data) => {
     let attached_ingredients  = ingredient_list.getAttribute('data-ingredients');
     let attached_measurements = ingredient_list.getAttribute('data-measurements');
 
-    if ((attached_ingredients == '') || (attached_measurements == '')) {
+    if ((attached_ingredients === '') || (attached_measurements === '')) {
         ingredient_list.setAttribute('data-ingredients',  JSON.stringify(data_ingredients));
         ingredient_list.setAttribute('data-measurements', JSON.stringify(data_measurements));
         update_list();

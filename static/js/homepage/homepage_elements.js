@@ -10,6 +10,7 @@ const data_holders    = document.getElementsByClassName('data-holder');
 const recipe_cards    = document.getElementsByClassName('recipe-card');
 const recipe_links    = document.getElementsByClassName('recipe-link');
 const recipe_names    = document.getElementsByClassName('recipe-name');
+const delete_recipes  = document.getElementsByClassName('delete-recipe');
 const selected_recipe = document.getElementById('selected-recipe');
 
 // Weekday planning

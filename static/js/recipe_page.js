@@ -1,5 +1,6 @@
 // Variables/page elements
 const measurements = document.getElementsByClassName('measurements');
+const spoons_header = document.getElementById('spoons-header');
 const spoons = document.getElementById('spoons');
 
 let spoons_needed = {
@@ -8,10 +9,14 @@ let spoons_needed = {
     'tsp' : new Set
 }
 
+// Converts all decimals inside the ingredient list to their fraction equivalents
 for (let i = 0; i < measurements.length; i++) {
     let measurement = measurements[i].innerText;
+    let units = ['cup', 'tbsp', 'tsp'];
 
+    // Only runs the below code if a decimal is present in the first place
     if (measurement.includes('.')) {
+        // Splits it based on the decimal (this is relevant for mixed fractions)
         let measurement_num = measurement.substring(measurement.indexOf('.'));
         measurement = measurement.substring(0, measurement.indexOf('.') || '');
 
@@ -24,10 +29,10 @@ for (let i = 0; i < measurements.length; i++) {
             '.75' : '¾'
         };
 
-        let units = ['cup', 'tbsp', 'tsp'];
 
         for (const [decimal, fraction] of Object.entries(replacements)) {
             if (measurement_num.includes(decimal)) { 
+                // Updates the spoons needed dict based on replacements that are done
                 for (let j = 0; j < units.length; j++) {
                     if (measurement_num.includes(units[j])) {
                         spoons_needed[units[j]].add(fraction);
@@ -38,15 +43,19 @@ for (let i = 0; i < measurements.length; i++) {
                 measurements[i].innerText = measurement + measurement_num;
             }
         }
+    } else {
+        for (let j = 0; j < units.length; j++) {
+            if (measurement.includes(units[j])) {
+                spoons_needed[units[j]].add(1);
+            }
+        }
     }
 }
 
+// Appends to the list with relevant measurements
 for (const [unit, measurements] of Object.entries(spoons_needed)) {
-    // console.log(unit);
-    // console.log(measurements);
-
     if (measurements.size != 0) {
-        spoons.classList.add('visible');
+        spoons_header.classList.add('visible');
         
         for (const measurement of measurements) {
             spoons.innerText += `${measurement} ${unit}\n`;
