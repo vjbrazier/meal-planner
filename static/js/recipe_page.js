@@ -1,5 +1,5 @@
 // Variables/page elements
-const measurements = document.getElementsByClassName('measurements');
+const measurements = document.getElementsByClassName('measurement');
 const spoons_header = document.getElementById('spoons-header');
 const spoons = document.getElementById('spoons');
 

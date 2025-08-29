@@ -35,11 +35,26 @@
 
     <h2 class="centered-text">Ingredients</h2>
     <br>
-    <div id="ingredients">
-        {% for measurement, ingredient in recipe_ingredients %}
-            <h3 class="measurements">{{ measurement }} {{ ingredient.title() }}</h3>
-        {% endfor %}
-    </div>
+    {% if not headers %}
+        <div id="ingredients">
+            {% for measurement, ingredient in recipe_ingredients %}
+                <h3 class="measurement">{{ measurement }} {{ ingredient.title() }}</h3>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div id="ingredients-headers">
+            {% for header, pair in recipe_ingredients %}
+                <h3 class="header">{{ header.title() }}</h3>
+
+                <div class="measurement-div">
+                    {% for measurement, ingredient in pair %}
+                        <h3 class="measurement">{{ measurement }} {{ ingredient.title() }}</h3>
+                    {% endfor %}
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    {% endif %}
     <br>
 
     <h2 id="spoons-header" class="centered-text">Spoons needed</h2>

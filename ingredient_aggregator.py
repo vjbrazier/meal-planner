@@ -39,7 +39,7 @@ def simplify_unit(unit):
     Simplifies the name of the unit provided.
     """
     units = {
-        'lb'  : ['lb', 'pound', 'pounds'],
+        'lb'  : ['lb', 'lbs', 'pound', 'pounds'],
         'oz'  : ['oz', 'ounce', 'ounces'],
         'cup' : ['cup', 'cups'],
         'tbsp': ['tbsp', 'tbsps', 'tablespoon', 'tablespoons'],

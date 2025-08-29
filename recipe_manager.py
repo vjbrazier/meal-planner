@@ -28,6 +28,105 @@ class RecipeManager:
 
         return arr
 
+    def determine_headers(self, ingredients):
+        """
+        Determines if ingredients contains sections like [Filling].
+        """
+        if '[' in ingredients:
+            headers = []
+            
+            while '[' in ingredients:
+                # Gets the section part
+                start_index = ingredients.index('[')
+                end_index = ingredients.index(']')
+
+                headers.append(ingredients[start_index+1:end_index])
+                ingredients = ingredients[:start_index] + ingredients[end_index + 1:]
+            return headers
+        
+        return None
+
+    def convert_ingredients(self, passed_ingredients, headers=None):
+        """
+        Converts ingredients from a long string into a list.
+        If headers are involved, it's a 2D list with each row belonging to a section.
+        """
+        if headers:
+            ingredients = []
+
+            while ']' in passed_ingredients:
+                # Get index of the end of the first header
+                start_index = passed_ingredients.index(']')
+
+                # Find the beginning of the next header
+                next_header = passed_ingredients.find('[', start_index)
+                if next_header is not -1:
+                    end_index  = passed_ingredients.index('[', start_index)
+                else:
+                    end_index = len(passed_ingredients)
+
+                # Append just the current ingredients
+                ingredients.append(self.clean_array_items(passed_ingredients[start_index + 1:end_index].split(',')))
+
+                # Remove the current ingredients from the string before checking again
+                passed_ingredients = passed_ingredients[start_index + 1:]
+
+            return ingredients
+
+        return passed_ingredients.split(',')
+
+    def split_ingredient(self, ingredient, segment_desired):
+        """
+        Splits ingredients and gets either the ingredient or the measurement from it.
+        """
+        units = [
+            'lb', 'lbs', 'pound', 'pounds',
+            'oz', 'ounce', 'ounces',
+            'cup', 'cups',
+            'tbsp', 'tbsps', 'tablespoon', 'tablespoons',
+            'tsp', 'tsps', 'teaspoon', 'teaspoons'
+        ]
+
+        # Check if this is measured or flat
+        for unit in units:
+            if unit in ingredient:
+                # Determines what segement to keep
+                if segment_desired == 'ingredient':
+                    index = ingredient.index(unit) + len(unit)
+                    return ingredient[index:].strip()
+                
+                index = ingredient.index(unit) + len(unit)
+                return ingredient[:index].strip()
+
+        # Same as above, but for lack of a measurement
+        index = ingredient.index(' ')
+        if segment_desired == 'ingredient':
+            return ingredient[index:].strip()
+        
+        return ingredient[:index].strip()
+
+    def extract_ingredients(self, raw_ingredients, headers):
+        """
+        Takes an array of ingredients, and creates dicts with their ingredients and measurements split.
+        """
+        if headers:
+            ingredients = {}
+
+            for section, header in enumerate(headers):
+                ingredients.setdefault(header, {'ingredients': [], 'measurements': []})
+
+                for ingredient in raw_ingredients[section]:
+                    ingredients.get(header).get('ingredients') .append(self.split_ingredient(ingredient.strip(), 'ingredient'))
+                    ingredients.get(header).get('measurements').append(self.split_ingredient(ingredient.strip(), 'measurement'))
+
+            return ingredients
+
+        ingredients = {'ingredients': [], 'measurements': []}
+        for ingredient in raw_ingredients:
+            ingredients.get('ingredients') .append(self.split_ingredient(ingredient.strip(), 'ingredient'))
+            ingredients.get('measurements').append(self.split_ingredient(ingredient.strip(), 'measurement'))
+        return ingredients
+
     def load_input_recipes(self, dict_data=None):
         """
         Loads recipes from the JSON file or from the data provided into live memory.
@@ -47,7 +146,6 @@ class RecipeManager:
             recipes[recipe] = Recipe(
                 name=recipe,
                 ingredients= data.get('ingredients'),
-                measurements=data.get('measurements'),
                 instructions=data.get('instructions'),
                 meal_type=data.get('meal_type'),
                 servings=data.get('servings'),
@@ -74,25 +172,30 @@ class RecipeManager:
             for line_count, line in enumerate(f, start=2):
                 current_line = line.strip().split('\t')
 
-                try:
+                # try:
+                if True:
                     name = current_line[0].lower()
+
+                    headers = self.determine_headers(current_line[1].strip())
+                    raw_ingredients = self.convert_ingredients(current_line[1], headers)
+                    ingredients  = self.extract_ingredients(raw_ingredients, headers)
 
                     recipe = {
                         'name': name,
-                        'ingredients':  self.clean_array_items(current_line[1].split(',')),
-                        'measurements': self.clean_array_items(current_line[2].split(',')),
-                        'meal_type': current_line[3],
-                        'servings': int(current_line[4]) if len(current_line) > 4 and current_line[4].isdigit() else 'N/A',
-                        'calories': int(current_line[5]) if len(current_line) > 5 and current_line[5].isdigit() else 'N/A',
-                        'protein':  int(current_line[6]) if len(current_line) > 6 and current_line[6].isdigit() else 'N/A',
-                        'carbs':    int(current_line[7]) if len(current_line) > 7 and current_line[7].isdigit() else 'N/A',
-                        'fat':      int(current_line[8]) if len(current_line) > 8 and current_line[8].isdigit() else 'N/A',
+                        'ingredients':  ingredients,
+                        'meal_type': current_line[2],
+                        'servings': int(current_line[3]) if len(current_line) > 3 and current_line[3].isdigit() else 'N/A',
+                        'calories': int(current_line[4]) if len(current_line) > 4 and current_line[4].isdigit() else 'N/A',
+                        'protein':  int(current_line[5]) if len(current_line) > 5 and current_line[5].isdigit() else 'N/A',
+                        'carbs':    int(current_line[6]) if len(current_line) > 6 and current_line[6].isdigit() else 'N/A',
+                        'fat':      int(current_line[7]) if len(current_line) > 7 and current_line[7].isdigit() else 'N/A',
                     }
 
                     recipe_data[name] = recipe
 
-                except Exception as e:
-                    add_to_log(f'[ERROR] An error occurred on line {line_count} of {data_tsv_file}: {e}')
+                # except Exception as e:
+                #     add_to_log(f'[ERROR] An error occurred on line {line_count} of {data_tsv_file}: {e}')
+                #     continue
 
         with open(instruction_tsv_file, 'r', encoding='utf-8') as f:
             next(f) # Skips the header
@@ -136,7 +239,7 @@ class RecipeManager:
             json.dump({recipe.name.lower(): recipe.to_dict() for recipe in self.recipes.values()}, f, indent=4)
         add_to_log('[INFO] Finished saving recipes!')
 
-    def create_recipe(self, name, ingredients, measurements, instructions, meal_type, servings, calories, protein, carbs, fat):
+    def create_recipe(self, name, ingredients, instructions, meal_type, servings, calories, protein, carbs, fat):
         """
         Creates a new recipe.
         """
@@ -144,7 +247,6 @@ class RecipeManager:
         self.recipes[name] =  Recipe(
                 name=name,
                 ingredients=ingredients,
-                measurements=measurements,
                 instructions=instructions,
                 meal_type=meal_type,
                 servings=servings,
